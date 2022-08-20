@@ -82,7 +82,12 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 	```
 
 	Maybe, you can think that DAT should be set before. Yes it is.<br>
-	But we can set DAT when we get the input values like below.
+	But, for some purpose, we can set DAT when we get the input values like below.
+	<details><summary>해석</summary> 
+	아마도 DAT가 미리 세팅되어있어야만 하는가를 생각할 수 있다. 그렇다<br>
+	그치만 목적에 따라 입력 데이터를 받으면서 아래와 같이 쉽게 설정한다<br>
+	</details><br>
+
 	```cpp
 	for (int i=0; i<10; i++){
 		cin >> arr[i]; // get the i's value and put it to arr
