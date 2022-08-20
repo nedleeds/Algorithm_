@@ -12,7 +12,7 @@
 ## 📌 **Status Table**
 - ***Status*** of algorithm
 - [DS](Concept/DataSturcture) : Data Structure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Algo](Concept/Concept) : Algorithm
-- Status : complete(🟢), working(🟡), next(🔴)
+- Status : &nbsp;&nbsp;complete(🟢)&nbsp;&nbsp;-&nbsp;&nbsp;working(🟡)&nbsp;&nbsp;-&nbsp;&nbsp;next(🔴)
 - 
     |Contents|Context<br>|Problems|Belong|
     |----:|:----:|:----:|:----:|
