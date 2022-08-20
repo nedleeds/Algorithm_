@@ -21,8 +21,8 @@
     |BFS||+0|Algo|
     |Queue||-|DS|
     |Tree||-|DS|
-    |Dijkstra|🟡|+0|Algo|
-    |FloodFill|🔴|+0|Algo|
+    |[Dijkstra](Concept/Dijkstra.md)|🟡|+0|Algo|
+    |[FloodFill](Concept/FloodFill.md)|🔴|+0|Algo|
     |Binary Search||+0|Algo|
     |Parametric Search||+0|Algo|
     |Two Pointer||+0|Algo|
