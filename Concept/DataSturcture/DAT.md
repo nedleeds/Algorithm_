@@ -48,7 +48,7 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 	보통 for문을 사용해 6을 확인하면 카운트를 올리는 식으로 생각할 수 있다.<br>
 	그러면 100000을 찾고 싶다면 어떨까? 100000을 다 사용해야할까?<br>
 	아니다. DAT를 사용하면 O(1)에 접근 가능하다.<br>
-	</details><br>
+	</details>
 
 	- Data<br>
   		|array|values|
@@ -84,8 +84,7 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 	But, for some purpose, we can set DAT when we get the input values like below.
 	<details><summary>해석</summary> 
 	아마도 DAT가 미리 세팅되어있어야만 하는가를 생각할 수 있다. 그렇다<br>
-	그치만 목적에 따라 입력 데이터를 받으면서 아래와 같이 쉽게 설정한다<br>
-	</details>
+	그치만 목적에 따라 입력 데이터를 받으면서 아래와 같이 쉽게 설정한다<br></details>
 
 	```cpp
 	for (int i=0; i<10; i++){
