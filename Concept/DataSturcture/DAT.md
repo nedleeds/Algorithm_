@@ -34,7 +34,6 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 		|빠른 접근가능 - O(1)| 음수를 다루기가 까다롭다 |
 		||메모리 낭비를 초래할 수 있다<br>ex) int arr[] = {1, 10000000000, 2, 3, 5};|
 	</details>
-
 <br>
 
 - example
@@ -86,7 +85,7 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 	<details><summary>해석</summary> 
 	아마도 DAT가 미리 세팅되어있어야만 하는가를 생각할 수 있다. 그렇다<br>
 	그치만 목적에 따라 입력 데이터를 받으면서 아래와 같이 쉽게 설정한다<br>
-	</details><br>
+	</details>
 
 	```cpp
 	for (int i=0; i<10; i++){
