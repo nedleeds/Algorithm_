@@ -13,7 +13,7 @@
 - ***Status*** of algorithm
 - [DS](Concept/DataSturcture) : Data Structure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Algo](Concept/Concept) : Algorithm
 - Status : &nbsp;&nbsp;complete( 🟢 )&nbsp;&nbsp;-&nbsp;&nbsp;working( 🟡 )&nbsp;&nbsp;-&nbsp;&nbsp;next( 🔴 )
-- 
+  
     |Contents|Status<br>|Problems|Belong|
     |----:|:----:|:----:|:----:|
     |[DAT](Concept/DataSturcture/DAT.md)|🟢|-|DS|
