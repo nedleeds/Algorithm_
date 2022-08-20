@@ -48,12 +48,12 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 	보통 for문을 사용해 6을 확인하면 카운트를 올리는 식으로 생각할 수 있다.<br>
 	그러면 100000을 찾고 싶다면 어떨까? 100000을 다 사용해야할까?<br>
 	아니다. DAT를 사용하면 O(1)에 접근 가능하다.<br>
-	</details>
+	</details><br>
 
-	- Data<br>
-  		|array|values|
-  		|:--:|:--:|
-		|arr[]|{4,2,5,6,7,1,3,4,5,2,5,4,4,2,6,4,5,6}|
+	 Data
+	 |array|values|
+	 |:--:|:--:|
+	 |arr[]|{4,2,5,6,7,1,3,4,5,2,5,4,4,2,6,4,5,6}|
 	```c++
 	// This is general 'for' iteration
 
