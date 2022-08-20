@@ -2,7 +2,12 @@
 ## Definition
 
 - DAT : ***D***irect ***A***ddress ***T***able<br>
-- ***D***irect ***A***ddress ***T***able is a data structure that has the capability of mapping records to their corresponding keys using arrays. In direct address tables, `records` are placed `using` their `key values` directly `as indexes`. They facilitate fast searching, insertion and deletion operations
+- ***D***irect ***A***ddress ***T***able is a data structure 
+that has the capability of mapping records to their 
+corresponding keys using arrays. In direct address tables, 
+`records` are placed `using` their `key values` directly 
+`as indexes`. They facilitate fast searching, insertion and 
+deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-address-table)
 
 - `Array` has a `meaning` or special `purpose`
 

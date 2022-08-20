@@ -12,12 +12,12 @@
 ## 📌 **Status Table**
 - ***Status*** of algorithm
 - [DS](Concept/DataSturcture) : Data Structure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Algo](Concept/Concept) : Algorithm
-- Status : &nbsp;&nbsp;complete(🟢)&nbsp;&nbsp;-&nbsp;&nbsp;working(🟡)&nbsp;&nbsp;-&nbsp;&nbsp;next(🔴)
+- Status : &nbsp;&nbsp;complete(🟢 )&nbsp;&nbsp;-&nbsp;&nbsp;working(🟡 )&nbsp;&nbsp;-&nbsp;&nbsp;next(🔴 )
 - 
-    |Contents|Context<br>|Problems|Belong|
+    |Contents|Status<br>|Problems|Belong|
     |----:|:----:|:----:|:----:|
-    |[DAT](Concept/DataSturcture/DAT.md)|🟡|-|DS|
-    |DFS|🔴|+0|Algo|
+    |[DAT](Concept/DataSturcture/DAT.md)|🟢|-|DS|
+    |DFS||+0|Algo|
     |BFS||+0|Algo|
     |Queue||-|DS|
     |Tree||-|DS|
