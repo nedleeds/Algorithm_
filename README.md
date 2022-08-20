@@ -9,24 +9,28 @@
 
 ## 📌 **Status Table**
 - ***Status*** of algorithm
+- [DS](Concept/DataSturcture) : Data Structure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Algo](Concept/Concept) : Algorithm
 - Status : complete(🟢), working(🟡), next(🔴)
 - 
-    |Algorithm|Context<br>|Problems|
-    |----:|:----:|:----:|
-    |DAT|🟡|+0|
-    |DFS|🔴|+0|
-    |BFS||+0|
-    |Dijkstra||+0|
-    |FloodFill||+0|
-    |Binary Search||+0|
-    |Parametric Search||+0|
-    |Two Pointer||+0|
-    |Prefix Sum||+0|
-    |Dinamic Programming||+0|
+    |Contents|Context<br>|Problems|Belong|
+    |----:|:----:|:----:|:----:|
+    |DAT|🟡|-|DS|
+    |DFS|🔴|+0|Algo|
+    |BFS||+0|Algo|
+    |Queue||-|DS|
+    |Tree||-|DS|
+    |Dijkstra||+0|Algo|
+    |FloodFill||+0|Algo|
+    |Binary Search||+0|Algo|
+    |Parametric Search||+0|Algo|
+    |Two Pointer||+0|Algo|
+    |Prefix Sum||+0|Algo|
+    |Dinamic Programming||+0|Algo|
 <br>
 
 
 ## 📌 **Concept**
+- There is `DataStructure` directory and 
 - This directory is for wrapping up the basic concepts
 - Includes text, picture and simple basic codes
 <br><br>
