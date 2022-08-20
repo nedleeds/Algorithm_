@@ -1,5 +1,5 @@
-# Algorithm
-    This repository is intended to organize everything about algorithms, 
+# Algorithm & Data structure
+    This repository is intended to organize everything about algorithms and data structures that I have learned, 
     including concepts and previously solved problems. I hope you enjoy my contents.
 
 ## 📌 **Purpose**
