@@ -20,6 +20,7 @@
     |FloodFill||+0|
     |Binary Search||+0|
     |Parametric Search||+0|
+    |Two Pointer||+0|
     |Prefix Sum||+0|
     |Dinamic Programming||+0|
 <br>
