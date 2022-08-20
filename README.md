@@ -40,9 +40,8 @@
 
 ## 📌 **Problems**
 - This directory structure is following **<u>Concept</u>** directory
-- All the problems is classified by the way of my solution
-- Platform description<br>
-- |Platform|Description|
+- All the problems is classified by the way of my solution<br>
+  |Platform|Description|
   |:--:|:--|
   |MC|[MinCoding](https://pro.mincoding.co.kr)|
   |BOJ| [Baekjoon Online Judge](https://www.acmicpc.net) 
