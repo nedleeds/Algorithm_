@@ -12,8 +12,7 @@
 ## 📌 **Status Table**
 - ***Status*** of algorithm
 - [DS](Concept/DataSturcture) : Data Structure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Algo](Concept/Concept) : Algorithm
-- Status : &nbsp;&nbsp;complete( 🟢 )&nbsp;&nbsp;-&nbsp;&nbsp;working( 🟡 )&nbsp;&nbsp;-&nbsp;&nbsp;next( 🔴 )
-  
+- Status : &nbsp;&nbsp;complete( 🟢 )&nbsp;&nbsp;-&nbsp;&nbsp;working( 🟡 )&nbsp;&nbsp;-&nbsp;&nbsp;next( 🔴 )<br><br>
     |Contents|Status<br>|Problems|Belong|
     |----:|:----:|:----:|:----:|
     |[DAT](Concept/DataSturcture/DAT.md)|🟢|-|DS|
@@ -40,7 +39,7 @@
 
 ## 📌 **Problems**
 - This directory structure is following **<u>Concept</u>** directory
-- All the problems is classified by the way of my solution<br>
+- All the problems is classified by the way of my solution<br><br>
   |Platform|Description|
   |:--:|:--|
   |MC|[MinCoding](https://pro.mincoding.co.kr)|
