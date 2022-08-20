@@ -1,6 +1,8 @@
 # Algorithm & Data structure
-    This repository is intended to organize everything about algorithms and data structures that I have learned, 
-    including concepts and previously solved problems. I hope you enjoy my contents.
+    This repository is intended to organize everything about 
+    algorithms and data structures that I have learned, 
+    including concepts and previously solved problems. 
+    I hope you enjoy my contents.
 
 ## 📌 **Purpose**
 - To overcome my weak algorithm skills
