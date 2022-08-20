@@ -9,7 +9,7 @@
 
 ## 📌 **Status Table**
 - ***Status*** of algorithm
-- Status : complete(🟢), working(🟡), next(🔴)
+- Status : complete(🟢), working(🟡), next(🔴)<br>
     |Algorithm|Context<br>|Problems|
     |----:|:----:|:----:|
     |DAT|🟡|+0|
