@@ -1,6 +1,4 @@
 # Algorithm
-
-## 📌 **Description**
     This repository is intended to organize everything about algorithms, including concepts and previously solved problems. I hope you enjoy my contents.
 
 ## 📌 **Purpose**
