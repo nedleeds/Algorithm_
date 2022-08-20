@@ -5,7 +5,7 @@
 
 - It was conceived by computer scientist [Edsger W. Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra) in 1956 and published three years later
 
-- `Original` algorithm : between <u>***two***</u> given nodes<br>
+- `Original` algorithm : between <u>***`two`***</u> given nodes<br>
   Common `variants` : between ***<u>`source`</u>*** node "to ***<u>`all other`</u>*** nodes" 
 
 - Condition : using labels that are ***<u>`positive`</u> integers*** or real numbers, which are ***<u>[totally ordered](https://en.wikipedia.org/wiki/Total_order)</u>***
