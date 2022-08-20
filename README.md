@@ -33,7 +33,7 @@
 
 ## 📌 **Concept**
 - There are two categories `DataStructure` and `Algorithm` 
-- Both catergoires are for wrapping up the basic concepts
+- Both categories are for wrapping up the basic concepts
 - Including text, picture and simple basic codes
 <br><br>
 
