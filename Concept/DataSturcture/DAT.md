@@ -39,11 +39,18 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 
 - example
 
-	Suppose that I want to find a frequency of '6' in the array that I have.
+	Suppose that I want to find a frequency of '6' in the array that I have.<br>
 	Maybe I can use `for` statement from the first. <br>
-	But, what if I want to find out '100000's frequency? 
+	But, what if I want to find out '100000's frequency? <br>
 	Do I need to iterate for 100000 times?<br>
 	No. If I use DAT, we can get at the O(1).
+	<details><summary>해석</summary> 
+	현재 가지고 있는 arr 배열에서 6의 출현 횟수를 세고 싶다고 해보자.<br>
+	보통 for문을 사용해 6을 확인하면 카운트를 올리는 식으로 생각할 수 있다.<br>
+	그러면 100000을 찾고 싶다면 어떨까? 100000을 다 사용해야할까?<br>
+	아니다. DAT를 사용하면 O(1)에 접근 가능하다.<br>
+	</details><br>
+
 	- Data<br>
   		|array|values|
   		|:--:|:--:|
