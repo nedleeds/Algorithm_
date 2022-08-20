@@ -32,9 +32,9 @@
 
 
 ## 📌 **Concept**
-- There is `DataStructure` directory and 
-- This directory is for wrapping up the basic concepts
-- Includes text, picture and simple basic codes
+- There are two categories `DataStructure` and `Algorithm` 
+- Both catergoires are for wrapping up the basic concepts
+- Including text, picture and simple basic codes
 <br><br>
 
 
