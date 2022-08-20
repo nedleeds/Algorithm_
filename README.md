@@ -6,7 +6,7 @@
 
 ## 📌 **Purpose**
 - To overcome my weak algorithm skills
-- I want to easily check and review everything I have studied before~
+- I want to easily check and review everything I have studied before
 <br><br>
 
 ## 📌 **Status Table**
