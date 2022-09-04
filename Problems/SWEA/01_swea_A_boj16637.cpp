@@ -2,51 +2,47 @@
 #include <vector>
 using namespace std;
 
-int totalLen;
-string nums;
-char arr[22];
-vector<int> idxL, idxR;
-vector<string> combinations;
+int n, ans = -2134567890;
+string str;
+
+int calculate(int a, int b, char op) {
+	if (op == '+')
+		a += b;
+	else if (op == '-')
+		a -= b;
+	else if (op == '*')
+		a *= b;
+
+	return a;
+}
+
+void dfs(int idx, int cur) {
+	if (idx >= n) {
+		ans = max(ans, cur);
+		return;
+	}
+
+	char op = idx == 0 ? '+' : str[idx - 1];
+
+	if (idx + 2 < n) {
+		int bracket = calculate(str[idx] - '0', str[idx + 2] - '0', str[idx + 1]);
+		dfs(idx + 4, calculate(cur, bracket, op));
+	}
+
+	dfs(idx + 2, calculate(cur, str[idx] - '0', op));
+
+}
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie();
 	cout.tie();
 
-	cin >> totalLen;
-	cin >> nums;
+	cin >> n >> str;
 
-	for (int i = 0; i < nums.length(); i++) {
-		arr[2 * i + 1] = nums[i];
-	}
-	
-	for (int i = 0; i <= nums.length() * 2; i++) {
-		if (i % 4 == 0) {
-			idxL.push_back(i);
-		}
-		else if ((i - 2) % 4 == 0) {
-			idxR.push_back(i);
-		}
-	}
+	dfs(0, 0);
 
-	int cntPair = 1;
-	int l, r;
-	for (int selectedCnt = 1; selectedCnt <= 6; selectedCnt++) {
-		cntPair = 1;
-		while (cntPair != selectedCnt) {
-			for (l = 0; l < idxL.size(); l++) {
-				arr[idxL[l]] = '(';
-				for (r = l; r < idxR.size(); r++) {
-					arr[idxR[r]] = ')';
-					cntPair++;
-					break;
-				}
-			}
-		}
-		int de = 1;
-	}
-
-	int de = 1;
+	cout << ans;
 
 	return 0;
 }
@@ -109,6 +105,7 @@ for( int selectedCnt = 1; selectedCnt <= 6; selectedCnt++){
 		}
 	}
 }
+
 
 --->
 */
