@@ -23,7 +23,7 @@ void checking(int& enemynum) {
             ++enemynum;
             for (int k = 0; k < 3; ++k) {
                 dis = abs(present[k].first - i) + abs(present[k].second - j);
-                if (dis > d) continue;    // 최소거리 넘으면
+                if (dis > d) continue; // 최소거리 넘으면
                 if (min_enemy[k].dis == dis && min_enemy[k].y < j) continue;    // 가장 왼쪽값 아니면
                 if (min_enemy[k].dis >= dis) min_enemy[k] = { i, j, dis };
             }
