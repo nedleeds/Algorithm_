@@ -6,6 +6,9 @@ int main() {
 	cin.tie();
 	cout.tie();
 
+	int n, m;
+	cin >> n >> m;
+
 
 
 	return 0;
