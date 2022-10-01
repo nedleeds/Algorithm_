@@ -4,7 +4,6 @@
 !*.*
 # Unignore all dirs
 !*/
-.DS_Store
 VisualStudio
 *.dSYM*
 .DS_Store
