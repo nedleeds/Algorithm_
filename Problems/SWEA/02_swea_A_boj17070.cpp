@@ -20,11 +20,11 @@ void dfs(Pos now, int mode) {
 		return;
 	}
 
-	// 0:°¡·Î, 1:¼¼·Î, 2:´ë°¢¼±
+	// 0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½, 2:ï¿½ë°¢ï¿½ï¿½
 	for (int nextMode = 0; nextMode < 3; nextMode++) {
-		if (mode == 0 && nextMode == 1) // ÇöÀç °¡·Î¸ðµå, ´ÙÀ½ ¼¼·Î¸ðµå
+		if (mode == 0 && nextMode == 1) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ï¿½
 			continue;
-		if (mode == 1 && nextMode == 0) // ÇöÀç ¼¼·Î¸ðµå, ´ÙÀ½ °¡·Î¸ðµå
+		if (mode == 1 && nextMode == 0) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ï¿½
 			continue;
 		Pos next = { now.r + dir[nextMode][0], now.c + dir[nextMode][1] };
 		int nr = next.r;
@@ -35,7 +35,7 @@ void dfs(Pos now, int mode) {
 			continue;
 		if (MAP[nr][nc] == 1)
 			continue;
-		if (nextMode == 2) {  // ´ÙÀ½ ´ë°¢¸ðµå - º® Ã¼Å©
+		if (nextMode == 2) {  // ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ - ï¿½ï¿½ Ã¼Å©
 			if (MAP[nr - 1][nc] || MAP[nr][nc - 1])
 				continue;
 		}
