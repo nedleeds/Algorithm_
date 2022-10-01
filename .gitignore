@@ -7,3 +7,4 @@
 VisualStudio
 *.dSYM*
 .DS_Store
+.vscode
