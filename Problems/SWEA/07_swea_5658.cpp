@@ -2,22 +2,21 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#include <string.h>
 using namespace std;
 
 int testCase, totalLength, K;
 vector<int> duplicates;
 string numbers;
 
-char* getHexa(int start, int totalLength) {
+const char* getHexa(int start, int totalLength) {
 	// the lib is 'square' -> totalLength/4
 	string currHexa;
 	for (int step = 0; step < (totalLength / 4); step++) {
 		int idx = (start + step) % totalLength;
 		currHexa += numbers[idx];
 	}
-	
-	char hex[10001];
-	strcpy(hex, currHexa.c_str());
+	const char* hex = currHexa.c_str();
 	return hex;
 }
 
@@ -59,7 +58,7 @@ int main()
 			}
 		}
 		sort(decValues.begin(), decValues.end(), cmp);
-		cout << "# " << decValues[K - 1] << '\n';
+		cout << "#" << tc << " " << decValues[K - 1] << '\n';
 	}
 
 	return 0;
