@@ -30,10 +30,10 @@ void bfs(queue<Node> q) {
 		Node now = q.front();
 		q.pop();
 		
-		int idx = MAP[now.r][now.c] - 1;
-		vector<int> dir = dirs[idx];
+		vector<int> dir = dirs[MAP[now.r][now.c] - 1];
 		for (int i = 0; i < dir.size(); i++) {
-			Node next = { now.r + dR[dir[i]], now.c + dC[dir[i]] };
+			Node next = { now.r + dR[dir[i]], now.c + dC[dir[i]] }
+
 			if (next.r < 0 || next.c < 0 || next.r >= N || next.c >= M)
 				continue;
 			if (MAP[next.r][next.c] == 0)
@@ -47,17 +47,6 @@ void bfs(queue<Node> q) {
 	}
 }
 
-void cntProper() {
-	for (int r = 0; r < N; r++) {
-		for (int c = 0; c < M; c++) {
-			if (visit[r][c] > 0 && visit[r][c] <= L) {
-				ans++;
-				cout << "[" << r << "," << c << "]: " << ans<< '\n';
-			}
-		}
-	}
-}
-
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie();
@@ -66,6 +55,7 @@ int main() {
 	cin >> testCase;
 	for (int tc = 1; tc <= testCase; tc++) {
 		cin >> N >> M >> R >> C >> L;
+
 		for (int r = 0; r < N; r++)
 			for (int c = 0; c < M; c++)
 				cin >> MAP[r][c];
@@ -75,15 +65,6 @@ int main() {
 		visit[R][C] = 1;
 		bfs(nodeQ);
 
-		cout << '\n';
-		for (int r = 0; r < N; r++) {
-			for (int c = 0; c < M; c++) {
-				cout << visit[r][c] << ' ';
-			}
-			cout << '\n';
-		}
-
-		cntProper();
 		cout << "#" << tc <<" " << ans << '\n';
 	}
 
