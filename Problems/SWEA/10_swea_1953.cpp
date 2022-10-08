@@ -1,96 +1,92 @@
 #include <iostream>
 #include <queue>
-#include <vector>
 using namespace std;
 
-int MAP[50][50];
-int visit[50][50];
 int testCase;
 int N, M, R, C, L;
-int ans;
+int MAP[50][50];
+int visited[50][50];
 int dR[4] = { -1, 1, 0, 0 };
-int dC[4] = { 0, 0, -1, 1 };
-struct Node {
-	int r, c;
-};
-
+int dC[4] = { 0, 0,-1, 1 };
+struct Node { int r, c; };
 vector<int> dirs[7] = {
-	// 0:╩С, 1:го, 2:аб, 3:©Л
-	{0, 1, 2, 3},
-	{0, 1},
-	{2, 3},
-	{0, 3},
-	{1, 3},
-	{1, 2},
-	{0, 2}
+    {0, 1, 2, 3}, //╩С,го,аб,©Л
+    {0, 1}, // ╩С,го
+    {2, 3}, // аб,©Л
+    {0, 3}, // ╩С,©Л
+    {1, 3}, // го,©Л
+    {1, 2}, // го,аб
+    {0, 2}  // ╩С,аб
 };
 
-void bfs(queue<Node> q) {
-	while (!q.empty()) {
-		Node now = q.front();
-		q.pop();
-		
-		vector<int> dir = dirs[MAP[now.r][now.c] - 1];
-		for (int i = 0; i < dir.size(); i++) {
-			Node next = { now.r + dR[dir[i]], now.c + dC[dir[i]] }
+void init() {
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < M; j++) {
+            MAP[i][j] = 0;
+            visited[i][j] = 0;
+        }
+}
 
-			if (next.r < 0 || next.c < 0 || next.r >= N || next.c >= M)
-				continue;
-			if (MAP[next.r][next.c] == 0)
-				continue;
-			if (visit[next.r][next.c] != 0)
-				continue;
-
-			visit[next.r][next.c] = visit[now.r][now.c] + 1;
-			q.push(next);
-		}
-	}
+bool checkDir(Node now, Node next, vector<int> nextDir) {
+    for (int i = 0; i < nextDir.size(); i++) {
+        Node check = { next.r + dR[nextDir[i]], next.c + dC[nextDir[i]] };
+        if (check.r == now.r && check.c == now.c)
+            return true;
+    }
+    return false;
 }
 
 int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie();
-	cout.tie();
+    ios_base::sync_with_stdio(false);
+    cin.tie();
+    cout.tie();
 
-	cin >> testCase;
-	for (int tc = 1; tc <= testCase; tc++) {
-		cin >> N >> M >> R >> C >> L;
+    cin >> testCase;
+    for (int tc = 1; tc <= testCase; tc++) {
+        int ans = 0;
+        init();
+        cin >> N >> M >> R >> C >> L;
 
-		for (int r = 0; r < N; r++)
-			for (int c = 0; c < M; c++)
-				cin >> MAP[r][c];
+        for (int r = 0; r < N; r++)
+            for (int c = 0; c < M; c++)
+                cin >> MAP[r][c];
 
-		queue<Node> nodeQ;
-		nodeQ.push({ R,C });
-		visit[R][C] = 1;
-		bfs(nodeQ);
-
-		cout << "#" << tc <<" " << ans << '\n';
-	}
+        queue<Node> nodeQ;
+        nodeQ.push({ R, C });
+        visited[R][C] = 1;
+        ans++;
 
 
-	return 0;
+        while (!nodeQ.empty()) {
+            Node now = nodeQ.front();
+            nodeQ.pop();
+
+            vector<int> nowDir = dirs[MAP[now.r][now.c] - 1];
+            for (int i = 0; i < nowDir.size(); i++) {
+                Node next = { now.r + dR[nowDir[i]], now.c + dC[nowDir[i]] };
+                vector<int> nextDir = dirs[MAP[next.r][next.c] - 1];
+                if (!checkDir(now, next, nextDir))
+                    continue;
+                if (next.r < 0 || next.c < 0 || next.r >= N || next.c >= M)
+                    continue;
+                if (MAP[next.r][next.c] == 0)
+                    continue;
+                if (visited[next.r][next.c] != 0)
+                    continue;
+
+                visited[next.r][next.c] = visited[now.r][now.c] + 1;
+                if (visited[next.r][next.c] > L)
+                    continue;
+                ans++;
+                nodeQ.push(next);
+            }
+        }
+
+
+        cout << "#" << tc << " " << ans << '\n';
+    }
+
+
+
+    return 0;
 }
-/*
-1
-5 6 2 1 3
-0 0 5 3 6 0
-0 0 2 0 2 0
-3 3 1 3 7 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-
-1
-10 10 4 3 9
-0 0 0 0 0 0 0 0 0 0
-0 0 0 7 5 0 5 0 0 0
-0 0 3 2 2 6 0 0 0 0
-0 4 7 2 2 2 7 0 0 4
-0 3 0 1 1 2 2 0 0 5
-0 5 6 1 1 1 1 6 2 5
-7 4 1 2 0 0 4 6 0 0
-5 3 1 7 0 2 2 6 5 7
-7 3 2 1 1 7 1 0 2 7
-3 4 0 0 4 0 5 1 0 1
-
-*/
