@@ -3,7 +3,7 @@
 #include <queue>
 using namespace std;
 
-int TESTCASE, D, W, K, ans;
+int TESTCASE, D, W, K, ANS;
 int MAP[13][20];
 int TMP[13][20];
 struct Permute {
@@ -16,6 +16,7 @@ bool operator < (Permute a, Permute b) {
 	if (a.cnt > b.cnt) return true;
 	return false;
 }
+
 typedef priority_queue<Permute> PQ;
 PQ PQ1, PQ2;
 
@@ -46,63 +47,40 @@ bool isPass(int m[13][20]) {
 		return false;
 }
 
-void setPermute(int lvl, Permute P, PQ* pq) {
-	if (lvl == 0) {
-		pq->push(P);
-		return;
-	}
-
-	for (int i = 0; i <= 1; i++) {
-		P.PATH.push_back(i);
-		if (i==1)
-			P.cnt++;
-		setPermute(lvl - 1, P, pq);
-		P.PATH.pop_back();
-		if (i == 1)
-			P.cnt--;
-	}
+void inject(int idx, int m) {
+	for (int i = 0; i < W; i++)
+		TMP[idx][i] = m;
 }
 
-void change(Permute p) {
-	for (int r = 0; r < D; r++)
-		for (int c = 0; c < D; c++)
-			TMP[r][c] = MAP[r][c];
+void restore(int idx) {
+	for (int i = 0; i < W; i++)
+		TMP[idx][i] = MAP[idx][i];
+}
 
-	// 여기서 걸려버림... A로 바꿀지 B로 바꿀지
-	// 순열을 한번더 ...?
-	PERMUTE2 = { {0,}, 0 };
-	while (!PQ2.empty()) { PQ2.pop(); };
+void dfs(int k, int cnt) {
+	// evaluation
+	if (isPass(TMP)) 
+		ANS = cnt < ANS ? cnt : ANS;
 
-	setPermute(p.cnt, PERMUTE2, &PQ2);
-	
-	for (int r = 0; r < D; r++) {
-		if (p.PATH[r] == 1) {
-			// A랑 B 둘 다 체크
+	// finish condition
+	if (k == D)
+		return;
+
+	// truncate - ANS should be minimum
+	if (cnt >= ANS)
+		return;
+
+	for (int i = 0; i < 3; i++) {
+		// 0:noChange, 1:A, 2:B
+		if (i != 0) {
+			inject(k, i - 1);
+			dfs(k + 1, cnt + 1);
+			restore(k);
+		}
+		else {
+			dfs(k + 1, cnt);
 		}
 	}
-
-}
-
-void evaluate() {
-	// 1st evaluation
-	if (isPass(MAP)) return;
-
-	// 2nd evaluation
-	// permutation of D (0:no change, 1:change)
-	// row change based on permutation
-	setPermute(D, PERMUTE1, &PQ1);
-	
-	while (!PQ1.empty()) {
-		Permute p = PQ1.top();
-		PQ1.pop();
-
-		int de = 1;
-		init(TMP);
-		change(p);
-	}
-	
-
-
 }
 
 int main() {
@@ -115,22 +93,22 @@ int main() {
 	cin >> TESTCASE;
 	for (int tc = 1; tc <= TESTCASE; tc++) {
 		cin >> D >> W >> K;
-		ans = 0;
+		ANS = 0;
 
 		// init MAP
 		init(MAP);
 
 		// set the MAP
 		for (int r = 0; r < D; r++)
-			for (int c = 0; c < W; c++)
+			for (int c = 0; c < W; c++) {
 				cin >> MAP[r][c];
-
+				TMP[r][c] = MAP[r][c];
+			}
 		// start evaluate
-		evaluate();
+		dfs(0, 0);
 
-		cout << "#" << tc << " " << ans << "\n";
+		cout << "#" << tc << " " << ANS << "\n";
 	}
-
 
 	return 0;
 }
