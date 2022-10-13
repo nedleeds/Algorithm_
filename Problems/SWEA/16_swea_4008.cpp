@@ -1,51 +1,60 @@
 #include <iostream>
 #include <vector>
+#include <cstring>
 #define INF 2134567890
 using namespace std;
 
 int TESTCASE, N;
 int MAX = -INF;
 int MIN = INF;
-int OPCOUNTS;
-int DAT[12];
-char OP[4] = { '+', '-', '*', '/' };
-string strOP;
-vector<int> VALUES;
-vector<int> INDICES;
+int SIGNCNT[4]; // '+', '-', '*', '/'
+vector<int> NUMS;
+vector<int> IDX;
 
 int compute() {
-	int result = VALUES[0];
-	for (int i = 0; i < INDICES.size(); i++) {
-		int idx = INDICES[i];
-		if (strOP[idx] == '+')
-			result = result + VALUES[i + 1];
-		else if (strOP[idx] == '-')
-			result = result - VALUES[i + 1];
-		else if (strOP[idx] == '*')
-			result = result * VALUES[i + 1];
-		else if (strOP[idx] == '/')
-			result = result / VALUES[i + 1];
+	// put first num
+	int result = NUMS[0];
+
+	for (int i = 0; i < IDX.size(); i++) {
+		if (IDX[i] == 0)
+			result += NUMS[i + 1];
+		else if (IDX[i] == 1)
+			result -= NUMS[i + 1];
+		else if (IDX[i] == 2)
+			result *= NUMS[i + 1];
+		else if (IDX[i] == 3)
+			result /= NUMS[i + 1];
 	}
 	return result;
 }
 
 void dfs(int lvl) {
-	if (lvl == strOP.size()) {
+	if (lvl == NUMS.size() - 1) {
 		int v = compute();
 		MAX = max(MAX, v);
 		MIN = min(MIN, v);
 		return;
 	}
 
-	for (int i = 0; i < strOP.size(); i++) {
-		if (DAT[i]) 
-			continue;
-		DAT[i] = 1;
-		INDICES.push_back(i);
-		dfs(lvl + 1);
-		DAT[i] = 0;
-		INDICES.pop_back();
+	for (int i = 0; i < 4; i++) {
+		if (SIGNCNT[i]) {
+			IDX.push_back(i);
+			SIGNCNT[i]--;
+
+			dfs(lvl + 1);
+
+			IDX.pop_back();
+			SIGNCNT[i]++;
+		}
 	}
+}
+
+void init() {
+	MIN = INF;
+	MAX = -INF;
+	NUMS.clear();
+	IDX.clear();
+	memset(SIGNCNT, 0, 4);
 }
 
 int main() {
@@ -58,32 +67,22 @@ int main() {
 
 	for (int tc = 1; tc <= TESTCASE; tc++) {
 		cin >> N;
-		strOP = "";
-		MIN = INF;
-		MAX = -INF;
-		VALUES.clear();
-		INDICES.clear();
-		memset(DAT, 0, 12);
-		for (int i = 0; i < 4; i++) {
-			int opCnt;
-			cin >> opCnt;
+		init();
 
-			for (int j = 0; j < opCnt; j++)
-				strOP += OP[i];
-		}
-		
+		for (int i = 0; i < 4; i++)
+			cin >> SIGNCNT[i];
+
 		for (int i = 0; i < N; i++) {
 			int value;
 			cin >> value;
-			VALUES.push_back(value);
+			NUMS.push_back(value);
 		}
 		dfs(0);
 
 		cout << "#" << tc << ' ' << MAX - MIN << '\n';
 	}
 
-
-	return 0; 
+	return 0;
 }
 
 /*
