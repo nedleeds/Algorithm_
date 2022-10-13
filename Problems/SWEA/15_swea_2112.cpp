@@ -1,9 +1,11 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#define INF 2134567890
 using namespace std;
 
-int TESTCASE, D, W, K, ANS;
+int TESTCASE, D, W, K;
+int ANS = INF;
 int MAP[13][20];
 int TMP[13][20];
 struct Permute {
@@ -26,59 +28,68 @@ void init(int m[13][20]) {
 			m[r][c] = 0;
 }
 
-bool isPass(int m[13][20]) {
+bool isOkay() {
 	int passCnt = 0;
 	// column wise check
 	for (int c = 0; c < W; c++) {
 		// row wise check
-		for (int r = 0; r < D - 2; r++) {
-			int r1 = m[r][c];
-			int r2 = m[r + 1][c];
-			int r3 = m[r + 2][c];
-			if ((r1 == r2 && r2 == r3)){
-				passCnt += 1;
-				break;
+		int cnt = 1;
+		for (int r = 0; r < D - (K - 1); r++) {
+			int first = TMP[r][c];
+			for (int dR = 1; dR < K; dR++) {
+				if (first != TMP[r + dR][c]) {
+					cnt = 1;
+					break;
+				}
+				else
+					cnt++;
 			}
+			if (cnt == K)
+				break;
 		}
+		if (cnt < K)
+			return false;
 	}
-	if (passCnt == W)
-		return true;
-	else
-		return false;
+	return true;
 }
 
-void inject(int idx, int m) {
-	for (int i = 0; i < W; i++)
-		TMP[idx][i] = m;
+void inject(int r, int m) {
+	for (int c = 0; c < W; c++)
+		TMP[r][c] = m;
 }
 
-void restore(int idx) {
-	for (int i = 0; i < W; i++)
-		TMP[idx][i] = MAP[idx][i];
+void restore(int r) {
+	for (int c = 0; c < W; c++)
+		TMP[r][c] = MAP[r][c];
 }
 
-void dfs(int k, int cnt) {
-	// evaluation
-	if (isPass(TMP)) 
-		ANS = cnt < ANS ? cnt : ANS;
-
-	// finish condition
-	if (k == D)
+void dfs(int row, int cnt) {
+	// check whole MAP
+	if (isOkay()){
+		ANS = min(ANS, cnt);
 		return;
+	}
+
+	// finished
+	if (row == D) {
+		return;
+	}
 
 	// truncate - ANS should be minimum
-	if (cnt >= ANS)
+	if (cnt > ANS)
 		return;
 
+	// choose whether inject or not by DFS
 	for (int i = 0; i < 3; i++) {
-		// 0:noChange, 1:A, 2:B
 		if (i != 0) {
-			inject(k, i - 1);
-			dfs(k + 1, cnt + 1);
-			restore(k);
+			// change - 1(A:0), 2(B:1)
+			inject(row, i - 1);
+			dfs(row + 1, cnt + 1);
+			restore(row);
 		}
 		else {
-			dfs(k + 1, cnt);
+			// noChange
+			dfs(row + 1, cnt);
 		}
 	}
 }
@@ -93,11 +104,10 @@ int main() {
 	cin >> TESTCASE;
 	for (int tc = 1; tc <= TESTCASE; tc++) {
 		cin >> D >> W >> K;
-		ANS = 0;
+		ANS = INF;
 
 		// init MAP
 		init(MAP);
-
 		// set the MAP
 		for (int r = 0; r < D; r++)
 			for (int c = 0; c < W; c++) {
