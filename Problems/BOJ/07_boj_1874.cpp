@@ -12,6 +12,7 @@ int main() {
 	int N;
 	cin >> N;
 
+	// stack is storage
 	vector<int> stack, result;
 	int cnt = 1;
 	int isPass = true;
@@ -21,16 +22,22 @@ int main() {
 		cin >> num;
 
 		// push should be increasing order
+		// ex) cnt == 1, num == 8
+		//	   <=> 1 ~ 7 should be in tack
 		while (cnt <= num) {
 			stack.push_back(cnt++);
 			result.push_back('+');
 		}
 
+		// if stack[end] == num(input)
+		//	  -> pop!
+		//	  -> which means 'put the number'
 		if (stack[stack.size() - 1] == num) {
 			stack.pop_back();
 			result.push_back('-');
 		}
 		else {
+			// stop if there's no what we wanna put
 			isPass = false;
 			break;
 		}
