@@ -12,12 +12,7 @@ vector<int> path;
 
 void dfs(int from, int cost, int cnt) {
 	if (from == start && cnt != 1) {
-		//minCost += MAP[from][start];
 		minCost = min(minCost, cost);
-
-		for (int i = 0; i < path.size(); i++)
-			cout << path[i] << " ";
-		cout << ": " << minCost << '\n';
 		return;
 	}
 
