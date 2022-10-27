@@ -4,8 +4,7 @@ using namespace std;
 bool* PrimeArray = new bool[1000001];
 
 void Eratos(int n) {
-	if (n <= 1)
-		return ;
+	if (n <= 1) return ;
 
 	// init
 	for (int i = 2; i <= n; i++)
