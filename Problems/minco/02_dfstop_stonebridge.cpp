@@ -1,46 +1,48 @@
 #include <iostream>
-#include <vector>
-#define INF 2134567890
+#include <queue>
+#include <string>
 using namespace std;
 
-int N;
-int MAP[12][12];
-int DAT[13];
-int start = 0;
-int minCost = INF;
-vector<int> path;
+string spell;
+string devil;
+string angel;
+string path;
+int DAT[27];
+int ans;
+struct Pos { int row, col; };
+queue<Pos> starts;
 
-void dfs(int from, int cost, int cnt) {
-	if (from == start && cnt != 1) {
-		//minCost += MAP[from][start];
-		minCost = min(minCost, cost);
+void SetStarts() {
+	char start = spell[0];
+	for (int c = 0; c < devil.size(); c++) {
+		if (devil[c] == start) {
+			starts.push({ 0, c });
+		}
+		if (angel[c] == start) {
+			starts.push({ 1, c });
+		}
+	}
+}
 
-		for (int i = 0; i < path.size(); i++)
-			cout << path[i] << " ";
-		cout << ": " << minCost << '\n';
-		return;
+int Toggle(int idx) {
+	return idx ^ 1;
+}
+
+void Dfs(int row, int col) {
+	if (spell == path) {
+		ans += 1;
+		cout << path << '\n';
+		return ;
+	}
+	
+	for (int r = 0; r < 1; r++) {
+		if (row == r)
+			continue;
+		
 	}
 
-	for (int to = 0; to < N; to++) {
-		if (DAT[to] != 0 && to != start)
-			continue;
-		if (to == start && cnt == 1)
-			continue;
-		if (to == start && cnt < N)
-			continue;
-		if (cost > minCost)
-			continue;
-		if (MAP[from][to] == 0)
-			continue;
+	path.pop_back();
 
-		DAT[to] = 1;
-		cost += MAP[from][to];
-		path.push_back(to);
-		dfs(to, cost, cnt + 1);
-		cost -= MAP[from][to];
-		path.pop_back();
-		DAT[to] = 0;
-	}
 }
 
 int main() {
@@ -50,20 +52,18 @@ int main() {
 
 	freopen_s(new FILE*, "sample_input.txt", "r", stdin);
 
-	cin >> N;
+	cin >> spell >> devil >> angel;
 
-	for (int r = 0; r < N; r++)
-		for (int c = 0; c < N; c++)
-			cin >> MAP[r][c];
+	SetStarts();
+	while (!starts.empty()) {
+		Pos start = starts.front();
+		starts.pop();
+		DAT[spell[0] - 'A'] = 1;
+		Dfs(start.row, start.col);
+		DAT[spell[0] - 'A'] = 0;
+	}
 
-	start = 0;
-	DAT[start] = 1;
-	path.push_back(start);
-	dfs(start, 0, 1);
-	path.pop_back();
-	DAT[start] = 0;
-
-	cout << minCost << '\n';
+	cout << ans << '\n';
 
 	return 0;
 }
