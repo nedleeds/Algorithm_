@@ -1,38 +1,30 @@
 #include <iostream>
-#include <unordered_map>
-#include <vector>
+#include <algorithm>
 #define INF 2134567890
 using namespace std;
 
 int s = 0;
 int minCnt = INF;
-vector<int> nums = { 3, 5 };
-unordered_map<int, int> cntTable;
+int Dp[5001]; // # of plastic bag
 
-void dfs(int s, int total) {
-	if (s >= total) {
-		if (s == total) {
-			int currCnt = 0;
-			for (auto it : cntTable)
-				currCnt += it.second;
+void dp(int n) {
+	// bottom - up
+	// Dp[] has '# of plastic bag
 
-			minCnt = min(minCnt, currCnt);
-			int de = 1;
+	Dp[3] = 1;
+	Dp[5] = 1;
+	for (int idx = 6; idx <= n; idx++){
+		// if 3 steps before idx has a value then add 1 to it.
+		if (Dp[idx - 3]) 
+			Dp[idx] = Dp[idx-3] + 1;
+		
+		// if 5 steps before idx also has a value,
+		// then, add min(Dp[idx], Dp[idx-5] + 1).
+		/// !! Dp[idx] <-- already update above condition !!
+		// else, add Dp[idx - 5] + 1
+		if (Dp[idx - 5]){
+			Dp[idx] = Dp[idx] ? min(Dp[idx], Dp[idx-5] + 1) : Dp[idx-5] + 1;
 		}
-		return;
-	}
-
-	for (auto n : nums) {
-		if (n + s > total)
-			continue;
-
-		s += n;
-		cntTable[n]++;
-
-		dfs(s, total);
-
-		s -= n;
-		cntTable[n]--;
 	}
 }
 
@@ -41,17 +33,14 @@ int main() {
 	cin.tie();
 	cout.tie();
 
-	freopen_s(new FILE*, "sample_input.txt", "r", stdin);
+	freopen("../SampleInput/input.txt", "r", stdin);
 
 	int n;
 	cin >> n;
 
-	dfs(s, n);
+	dp(n);
 
-	if (minCnt == INF)
-		minCnt = -1;
-
-	cout << minCnt << '\n';
+	cout << (Dp[n] == 0 ? -1 : Dp[n]) << endl;
 
 	return 0;
 }
