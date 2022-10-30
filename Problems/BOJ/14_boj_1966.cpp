@@ -1,45 +1,65 @@
 #include <iostream>
-#include <algorithm>
-#define INF 2134567890
+#include <queue>
 using namespace std;
 
-int s = 0;
-int minCnt = INF;
-int Dp[5001]; // # of plastic bag
+typedef pair<int, int> PII;
 
-void dp(int n) {
-	// bottom - up
-	// Dp[] has '# of plastic bag
-	Dp[3] = 1;
-	Dp[5] = 1;
-	for (int idx = 6; idx <= n; idx++){
-		// if 3 steps before idx has a value then add 1 to it.
-		if (Dp[idx - 3]) 
-			Dp[idx] = Dp[idx-3] + 1;
-		
-		// if 5 steps before idx also has a value,
-		// then, add min(Dp[idx], Dp[idx-5] + 1).
-		/// !! Dp[idx] <-- already update above condition !!
-		// else, add Dp[idx - 5] + 1
-		if (Dp[idx - 5]){
-			Dp[idx] = Dp[idx] ? min(Dp[idx], Dp[idx-5] + 1) : Dp[idx-5] + 1;
-		}
+bool isBigger(void* q, int highest){
+	queue<PII> rankQ = *(queue<PII> *)q;
+
+	bool flag =false;
+	for (int i = 0; i < rankQ.size(); i++){
+		PII rank = rankQ.front();
+		rankQ.pop();
+
+		if (highest < rank.first)
+			flag = true;
+
+		rankQ.push(rank);
 	}
+	return flag;
 }
 
-int main() {
+int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie();
 	cout.tie();
 
 	freopen("../SampleInput/input.txt", "r", stdin);
 
-	int n;
-	cin >> n;
+	int testCase;
+	cin >> testCase;
 
-	dp(n);
+	for (int tc = 0; tc < testCase; tc++){
+		int n, m;
+		cin >> n >> m;
 
-	cout << (Dp[n] == 0 ? -1 : Dp[n]) << endl;
+		// get input
+		queue<PII> rankQ, printQ;
+		for (int pos = 0; pos < n; pos++){
+			PII ranking;
+			cin >> ranking.first;
+			ranking.second = pos;
+			rankQ.push(ranking);
+		}
+
+		int cnt = 0;
+		while(!rankQ.empty()){
+			PII rankNow = rankQ.front();
+			rankQ.pop();
+
+			// if there is bigger element -> push
+			if (isBigger(&rankQ, rankNow.first)){
+				rankQ.push(rankNow);
+			}
+			// else -> print !
+			else{
+				cnt++;
+				if (rankNow.second == m) break;
+			}
+		}
+		cout << cnt << '\n';
+	}
 
 	return 0;
 }
