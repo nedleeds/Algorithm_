@@ -4,31 +4,27 @@
 using namespace std;
 
 void operate(string cmd, void* stackP, int num){
-	vector<int> stack = *(vector<int> *) stackP;
+	vector<int> *stack = (vector<int> *) stackP;
 
 	if (cmd == "push"){
-		stack.push_back(num);
-		int de = 1;
+		stack->push_back(num);
 	}
 	else if (cmd == "pop"){
-		int num = stack.empty()? -1 : stack[stack.size()-1];
-		stack.pop_back();
+		int num = stack->empty()? -1 : stack->back();
+		if (num != -1)
+			stack->pop_back();
 		cout << num << '\n';
-		int de = 1;
 	}
 	else if (cmd == "size"){
-		cout << stack.size() << '\n';
-		int de = 1;
+		cout << stack->size() << '\n';
 	}
 	else if (cmd =="empty"){
-		int isEmpty = stack.empty() ? 1 : 0;
+		int isEmpty = stack->empty() ? 1 : 0;
 		cout << isEmpty << '\n';
-		int de = 1;
 	}
 	else if (cmd == "top"){
-		int num = stack.empty()? -1 : stack[stack.size()-1];
+		int num = stack->empty()? -1 : stack->back();
 		cout << num << '\n';
-		int de = 1;
 	}
 }
 
@@ -37,13 +33,13 @@ int main(){
 	cin.tie();
 	cout.tie();
 
-	freopen("../SampleInput/input.txt", "r", stdin);
+	freopen_s(new FILE*, "./sample_input.txt", "r", stdin);
 
 	int n;
 	cin >> n;
 	
 	vector<int> stack;
-	for (int i = 0; i < n; i++){
+	for (int i = 0; i <= n; i++) {
 		string s;
 		getline(cin, s);
 
