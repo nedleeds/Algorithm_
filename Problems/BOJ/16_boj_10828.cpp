@@ -33,7 +33,7 @@ int main(){
 	cin.tie();
 	cout.tie();
 
-	freopen_s(new FILE*, "./sample_input.txt", "r", stdin);
+	freopen("../SampleInput/input.txt", "r", stdin);
 
 	int n;
 	cin >> n;
