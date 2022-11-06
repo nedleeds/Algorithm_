@@ -1,38 +1,63 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 
 int N;
 int Map[20][20];
+int Visit[20][20];
 int dR[4] = {-1, 1, 0, 0};
 int dC[4] = { 0, 0,-1, 1};
 struct POS{ int r, c, dist; } Shark, Fish;
+vector<POS> Fishes;
 
-int getDist(POS *shark, POS fish){
-    return abs(shark->r - fish.r) + abs(shark->c - fish.c);
+int getDist(POS shark, POS fish){
+    return abs(shark.r - fish.r) + abs(shark.c - fish.c);
 }
 
-bool operator <(POS fishA, POS fishB){
-    if (fishA.dist < fishB.dist) return true;
-    if (fishA.dist > fishB.dist) return false;
 
-    if (fishA.r < fishB.r) return true;
-    if (fishA.r > fishB.r) return false;
+bool cmp(POS fishA, POS fishB){
+    if (fishA.dist > fishB.dist) return true;
+    if (fishA.dist < fishB.dist) return false;
 
-    if (fishA.c < fishB.c) return true;
-    if (fishA.c > fishB.c) return false;
+    if (fishA.r > fishB.r) return true;
+    if (fishA.r < fishB.r) return false;
+
+    if (fishA.c > fishB.c) return true;
+    if (fishA.c < fishB.c) return false;
 
     return false;
 }
-priority_queue<POS> Fishes;
 
-void dfs(POS *nowShark, int sharkSize){
-
-    for (int i = 0; i < 4; i++){
-        POS nextShark = {nowShark->r + dR[i], nowShark->c + dC[i]};
-        
+void setFishes(){
+    for (int r = 0; r < N; r++){
+        for (int c = 0; c < N; c++){
+            if (0 <= Map[r][c] && Map[r][c] <= 6)
+                Fishes.push_back({r, c, getDist(Shark, {r, c, 0})});
+        }
     }
+    sort(Fishes.begin(), Fishes.end(), cmp);
+}
 
+void dfs(POS now, int sharkSize){
+    for (int i = 0; i < 4; i++){
+        POS next = {now.r + dR[i], now.c + dC[i]};
+        if (next.r < 0 || next.c < 0 || next.r >= N || next.c >= N)
+            continue;
+        if (Map[next.r][next.r] > Map[now.r][now.c]){
+            // 엄마 물고기에게 도움 요청 --> 정답 출력하고 종료
+            cout << "엄마!\n";
+            return ;
+        }
+        if (MAP[next.r][next.c] == 0)
+            continue;
+        if (Visit[next.r][next.c] != 0)
+            continue;   
+        // 상어가 움직이면 원래 자리는 0
+        // if (Visit[next.r][next.c] == )
+
+        Visit[next.r][next.c] = 1;
+    }
 }
 
 int main(){
@@ -49,19 +74,13 @@ int main(){
             if (Map[r][c] == 9){
                 Shark = {r, c};
             }
+        }
+    }
 
-        }
-    }
-    for (int r = 0; r < N; r++){
-        for (int c = 0; c < N; c++){
-            if (Map[r][c] >=1 && Map[r][c] <= 6){
-                Fish = {r, c};
-                Fish.dist = getDist(&Shark, Fish);
-                Fishes.push(Fish);
-            }
-        }
-    }
-    
+    setFishes();
+    Visit[Shark.r][Shark.c] = 1;
+    dfs(Shark, 2);
+
     int de = 1;
 
     return 0;
@@ -83,13 +102,14 @@ int main(){
             => for 문 완료 후 pass cnt = 0 인 경우 : 그 동안 잡아먹은 물고기 수 출력하면서 탈출
        - 먹을 수 있는 물고기 = 1마리 
           -> 먹으러 간다(이동) -> 0 마리는 이동 불가
-       - 먹을 수 있는 물고기 > 1마리 => 'bfs'
-          -> "가장 가까운" 물고기 먹으러 간다 => '상어 노드'~'물고기' bfs 로 -> queue를 heap+sort(Pos)
-          -> 거리: 아기 상어가 있는 칸에서 물고기가 있는 칸으로 이동할 때
-                  지나야 하는 칸의 갯수의 최솟값
-          -> 거리가 가까운 물고기가 많다면, 
-             -> 가장 위에 있는 물고기 => (row Min)
-             -> 그러한 물고기가 여러마리라면, 가장 왼쪽에 있는 물고기를 먹는다 => (col Min)
+       - 먹을 수 있는 물고기 > 1마리 
+          -> "가장 가까운" 물고기 먹으러 간다 => '상어 노드'~'물고기' bfs 로 
+            -> queue를 heap+sort(Pos) 
+            -> heap sort 는 전체 정렬을 하지 X => vector 로 sort 진행함
+          -> [V] 거리: 아기 상어가 있는 칸에서 물고기가 있는 칸으로 이동할 때 지나야 하는 칸의 갯수의 최솟값
+          -> [V] 거리가 가까운 물고기가 많다면, 
+                 -> 가장 위에 있는 물고기 => (row Min)
+                 -> 그러한 물고기가 여러마리라면, 가장 왼쪽에 있는 물고기를 먹는다 => (col Min)
         - 아기 상어의 이동은 1초, 물고기 먹는데 걸리는 시간은 없다
         - 아기 상어가 먹을 수 있는 물고기가 있는 칸으로 이동했다면, "동시에 먹음 "
         - "물고기를 먹으면 그 칸은 빈 칸이 된다"
