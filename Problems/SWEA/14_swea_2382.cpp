@@ -31,8 +31,8 @@ bool isEdge(Pos n) {
 }
 
 void turn(int dir, Pos p) {
-	// 1:»ó   2:ÇÏ   3:ÁÂ   4:¿ì
-	// 2:ÇÏ   1:»ó   4:¿ì   3:ÁÂ
+	// 1:ï¿½ï¿½   2:ï¿½ï¿½   3:ï¿½ï¿½   4:ï¿½ï¿½
+	// 2:ï¿½ï¿½   1:ï¿½ï¿½   4:ï¿½ï¿½   3:ï¿½ï¿½
 	if (dir == 1) {
 		DIR[p.r][p.c] = 2;
 	}
@@ -48,7 +48,7 @@ void turn(int dir, Pos p) {
 }
 
 void simulation() {
-	// pq¿¡ ¹Ì»ý¹° Á¤º¸ ÀúÀå
+	// pqï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	for (int r = 0; r < N; r++)
 		for (int c = 0; c < N; c++) {
 			VST[r][c] = false;
@@ -56,7 +56,7 @@ void simulation() {
 				PQ.push({ { r,c }, MAP[r][c], DIR[r][c] });
 		}
 
-	// ¹Ì»ý¹°µé ÇÏ³ª¾¿ next step ÁøÇà
+	// ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ next step ï¿½ï¿½ï¿½ï¿½
 	while (!PQ.empty()) {
 		Bug bug = PQ.top();
 		PQ.pop();
@@ -65,29 +65,29 @@ void simulation() {
 		int nowDir = bug.dir;
 
 		Pos next = { now.r + dR[nowDir - 1], now.c + dC[nowDir - 1] };
-		// ´ÙÀ½À¸·Î ³Ñ¾î°¡±âÀü ÀÚ¸®ºñ¿ì±â
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (!VST[now.r][now.c]) {
 			MAP[now.r][now.c] = 0;
 			DIR[now.r][now.c] = 0;
 		}
 
-		// ´ÙÀ½À¸·Î ³Ñ¾î°¡±â
-		// 1) °¡ÀåÀÚ¸® Ã¼Å©
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½
+		// 1) ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ Ã¼Å©
 		if (isEdge(next)) {
 			if (VST[next.r][next.c]) {
-				// ÀÌ¹Ì '´õ ¸¹Àº' ¹Ì»ý¹° ¹æ¹®ÇÑ °æ¿ì -> µ¡¼À¸¸
-				// reason: Priority Queue Àû¿ë
+				// ï¿½Ì¹ï¿½ 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½' ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				// reason: Priority Queue ï¿½ï¿½ï¿½ï¿½
 				MAP[next.r][next.c] += bug.cnt / 2;
 			}
 			else {
-				// Ã¹ ¹æ¹® : cnt Àý¹Ý + ¹æÇâ ÀüÈ¯ + ¹æ¹® Ã¼Å©
+				// Ã¹ ï¿½æ¹® : cnt ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ + ï¿½æ¹® Ã¼Å©
 				MAP[next.r][next.c] = bug.cnt / 2;
 				turn(bug.dir, next);
 				VST[next.r][next.c] = true;
 			}	
 		}
 		else {
-			// 2) ³»ºÎ ÁøÇà
+			// 2) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if (VST[next.r][next.c])
 				MAP[next.r][next.c] += bug.cnt;
 			else {
@@ -105,7 +105,7 @@ int main() {
 	cin.tie();
 	cout.tie();
 
-	freopen_s(new FILE*, "sample_input.txt", "r", stdin);
+	freopen("../SampleInput/input.txt", "r", stdin);
 
 	cin >> TESTCASE;
 
