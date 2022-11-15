@@ -106,6 +106,7 @@ int main() {
 
 	return 0;
 }
+
 /*
 함수 R	- Reverse: 배열에 있는 수의 순서를 뒤집는다
 함수 D	- Delete: 첫번째 수를 버리는 함수
