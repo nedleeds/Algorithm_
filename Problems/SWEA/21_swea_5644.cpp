@@ -47,13 +47,14 @@ int main(){
 	cin.tie();
 	cout.tie();
 	
-freopen("../SampleInput/input.txt", "r", stdin);
+	//freopen_s(new FILE*, "../SampleInput/input.txt", "r", stdin);
 
 	int testCase;
 	cin >> testCase;
 	for (int tc = 1; tc <= testCase; tc++){
 		int numMove, numBC;
 		cin >> numMove >> numBC;
+
 		// set Move Dirs
 		vector<int> directions[2];
 		for (int j = 0; j < 2; j++){
@@ -77,6 +78,7 @@ freopen("../SampleInput/input.txt", "r", stdin);
 			batteryV.push_back(bc);
 			bfs(i, bc); // bfs for set charge area
 		}
+
 		// move !
 		POS nowA = {0, 0};
 		POS nowB = {9, 9};
@@ -87,6 +89,7 @@ freopen("../SampleInput/input.txt", "r", stdin);
 			int dirB = directions[1][t];
 			POS nextA = {nowA.row + dR[dirA], nowA.col + dC[dirA]};
 			POS nextB = {nowB.row + dR[dirB], nowB.col + dC[dirB]};	
+			
 			// check amount of MAP(battery Amounts in area) from bfs()
 			int maxAmount = -INF;
 			for (int i = 0; i < numBC; i++){
@@ -101,6 +104,7 @@ freopen("../SampleInput/input.txt", "r", stdin);
 				}
 			}
 			chargeSum += maxAmount;
+			
 			// update position before move
 			nowA = nextA;
 			nowB = nextB;
@@ -116,104 +120,3 @@ freopen("../SampleInput/input.txt", "r", stdin);
 	}
 	return 0;
 }
-// #include <iostream>
-// #include <vector>
-// #include <algorithm>
-// #include <vector>
-
-// using namespace std;
-
-// struct user{
-//     int y, x;
-// };
-// struct beacon{
-//     int y,x;
-//     int d,p,u;
-// };
-// user usr[2];
-// beacon bc[8];
-// vector <int> moving[2];
-// int T,M,A,res;
-// int dy[]={0,-1,0,1,0};
-// int dx[]={0,0,1,0,-1};
-// int ret=0;
-
-// bool check(int a, int b){
-//     int dist = abs(usr[a].x - bc[b].x) + abs(usr[a].y - bc[b].y);
-//     if(dist <= bc[b].d){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// }
-
-// void dfs(int user, int d){
-//     if(user==2){
-//         ret = max(ret,d);
-//         return;
-//     }
-//     for(int i=0;i<A;i++){
-//         if(bc[i].u==0&&check(user,i)){
-//             bc[i].u=1;
-//             dfs(user+1,d+bc[i].p);
-//             bc[i].u=0;
-//         }
-//     }
-//     dfs(user+1,d);
-// }
-
-
-// int count(){
-//     ret = 0;
-//     dfs(0,0);
-//     return ret;
-// }
-
-// void solve(){
-//     moving[0].clear();
-//     moving[1].clear();
-
-//     for(int i=0;i<A;i++)
-//         bc[i].u=0;
-
-//     usr[0].x=1, usr[0].y=1;
-//	   usr[1].x=10,usr[1].y=10;
-    
-//     cin >> M >> A;
-//     for(int i = 0; i < 2; i++)
-//         for(int j = 0;j < M; j++){
-//             int a;
-//             cin >> a;
-//             moving[i].push_back(a);
-//         }
-
-//     for(int i = 0; i < A; i++)
-//         cin >> bc[i].x >> bc[i].y >> bc[i].d >> bc[i].p;
-
-//     res += count();
-
-//     for(int i=0;i<M;i++){
-//         for(int j=0;j<2;j++){
-//             usr[j].x += dx[moving[j][i]];
-//             usr[j].y += dy[moving[j][i]];
-//         }
-//         res+=count();
-//     }
-// }
-
-// int main(){
-// 	ios_base::sync_with_stdio(false);
-// 	cin.tie();
-// 	cout.tie();
-
-//     freopen("../SampleInput/input.txt","r",stdin);
-//     cin>>T;
-
-//     for(int i=1;i<=T;i++){
-//         res=0;
-//         solve();
-//         cout<<"#"<<i<<" "<<res<<"\n";
-//     }
-
-//     return 0;
-// }
