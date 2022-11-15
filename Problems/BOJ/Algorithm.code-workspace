@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "..\\.."
+		},
+		{
+			"name": "SSH FS - raspcar",
+			"uri": "ssh://raspcar/"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.ejs": "html",
+			"string": "cpp",
+			"iostream": "cpp"
+		},
+		"debug.inlineValues": "on"
+	}
+}

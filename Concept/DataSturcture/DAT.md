@@ -94,3 +94,32 @@ deletion operations - [geeksforgeeks](https://www.geeksforgeeks.org/direct-addre
 		// value: frequency from the each number(record)
 	}
 	```
+
+	Furthermore, you've just realized that current DAT type is wasting memory.<br>
+	Because I have declared the array with specific size.<br>
+	So, we can improve the memory efficience using 'unordered_map' like this.
+
+	```cpp
+	#include <iostream>
+	#include <unordered_map>
+	using namespace std;
+
+	unordered_map<int, int> DAT;
+
+	int main(){
+		int arr[] = {4,2,5,6,7,1,3,4,5,2,5,4,4,2,6,4,5,6};
+
+		for (int i=0; i<arr.size(); i++)
+			DAT[arr[i]] += 1;
+
+		/*
+			unordered_map default value is 0.
+			so, if you use key not in hash, its value will be 0.
+			DAT[999]'s value: 0
+		*/
+
+		return 0;
+	} 
+
+	```
+
