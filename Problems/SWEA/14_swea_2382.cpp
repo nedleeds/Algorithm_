@@ -105,7 +105,7 @@ int main() {
 	cin.tie();
 	cout.tie();
 
-	freopen("../SampleInput/input.txt", "r", stdin);
+	freopen_s(new FILE*, "sample_input.txt", "r", stdin);
 
 	cin >> TESTCASE;
 

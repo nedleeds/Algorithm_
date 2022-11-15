@@ -6,8 +6,8 @@ int TestCase, N, M, K;
 int Map[100][100];
 int Tmp[100][100];
 int Dir[100][100];
-int dR[4] = { -1, 1, 0, 0 };
-int dC[4] = { 0, 0, -1, 1 };
+int dR[5] = {0, -1, 1, 0, 0 };
+int dC[5] = {0, 0, 0, -1, 1 };
 struct BUG { int r, c, cnt, dir; } Bug;
 
 struct cmp {
@@ -18,7 +18,6 @@ struct cmp {
 	}
 };
 priority_queue<BUG, vector<BUG>, cmp> BugQ;
-queue<BUG> TmpQ;
 
 void move() {
 	while (!BugQ.empty()) {
@@ -26,46 +25,45 @@ void move() {
 		BugQ.pop();
 
 		// next position - 1시간 후
-		int nr = now.r + dR[now.dir - 1];
-		int nc = now.c + dC[now.dir - 1];
+		int nr = now.r + dR[now.dir];
+		int nc = now.c + dC[now.dir];
 
 		// 범위 체크
 		if (nr < 0 || nr >= N || nc < 0 || nc >= N)
 			continue;
 
+		// 세균 다음 방향 표시
+		int dir = 0;
+		if (Tmp[nr][nc] == 0) {
+			Dir[nr][nc] = now.dir;
+		}
+
 		// 세균 다음 위치 표시
 		Tmp[nr][nc] += Map[now.r][now.c];
 		Map[now.r][now.c] = 0;
-
-		// 세균 다음 방향 표시
-		int dir = Dir[nr][nc];
-		if (Tmp[nr][nc] == 0) {
-			dir = Dir[now.r][now.c];
-		}
+		
 
 		// check edge
 		if (nr == 0 || nr == N - 1 || nc == 0 || nc == N - 1) {
 			// 가는 곳이 edge 인 경우 - 방향 반대로 설정
-			if		(Dir[now.r][now.c] == 1) Dir[nr][nc] = 2;
-			else if (Dir[now.r][now.c] == 2) Dir[nr][nc] = 1;
-			else if (Dir[now.r][now.c] == 3) Dir[nr][nc] = 4;
-			else if (Dir[now.r][now.c] == 4) Dir[nr][nc] = 3;
+			if		(Dir[nr][nc] == 1) Dir[nr][nc] = 2;
+			else if (Dir[nr][nc] == 2) Dir[nr][nc] = 1;
+			else if (Dir[nr][nc] == 3) Dir[nr][nc] = 4;
+			else if (Dir[nr][nc] == 4) Dir[nr][nc] = 3;
 
 			// 미생물 절반
 			Tmp[nr][nc] = Tmp[nr][nc] / 2;
 		}
 
-		if (Map[nr][nc])
-			BugQ.push({ nr, nc, Map[nr][nc], Dir[nr][nc] });
 	}
 
 	for (int row = 0; row < N; row++)
 		for (int col = 0; col < N; col++) {
 			Map[row][col] = Tmp[row][col];
 			Tmp[row][col] = 0;
+			if (Map[row][col])
+				BugQ.push({ row, col, Map[row][col], Dir[row][col] });
 		}
-
-	int de1 = 1;
 }
 
 void reset() {
@@ -82,13 +80,15 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(), cout.tie();
 
-	freopen_s(new FILE*, "./SampleInput/input.txt", "r", stdin);
+	// freopen_s(new FILE*, "./SampleInput/input.txt", "r", stdin);
+	freopen("../SampleInput/input.txt", "r", stdin);
 
 	cin >> TestCase;
 	for (int tc = 1; tc <= TestCase; tc++) {
 		cin >> N >> M >> K;
 
 		for (int i = 0; i < K; i++) {
+			
 			cin >> Bug.r >> Bug.c >> Bug.cnt >> Bug.dir;
 			Map[Bug.r][Bug.c] = Bug.cnt;
 			Dir[Bug.r][Bug.c] = Bug.dir;
@@ -100,8 +100,8 @@ int main() {
 		}
 
 		int s = 0;
-		for (int r = 1; r < N - 1; r++)
-			for (int c = 1; c < N - 1; c++)
+		for (int r = 0; r < N; r++)
+			for (int c = 0; c < N; c++)
 				s += Map[r][c];
 
 		cout << "#" << tc << " " << s << '\n';

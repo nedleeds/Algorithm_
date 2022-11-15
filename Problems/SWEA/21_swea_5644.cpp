@@ -47,7 +47,11 @@ int main(){
 	cin.tie();
 	cout.tie();
 	
+<<<<<<< Updated upstream
 	//freopen_s(new FILE*, "../SampleInput/input.txt", "r", stdin);
+=======
+	freopen("../SampleInput/input.txt", "r", stdin);
+>>>>>>> Stashed changes
 
 	int testCase;
 	cin >> testCase;
@@ -119,4 +123,8 @@ int main(){
 					MAP[i][r][c] = 0;
 	}
 	return 0;
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
