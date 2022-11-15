@@ -52,6 +52,5 @@ int main(){
 
 		operate(cmd, &stack, num);
 	}
-
 	return 0;
 }
