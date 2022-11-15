@@ -32,34 +32,35 @@ void move(){
         if (nr < 0 || nr >= N || nc < 0 || nc >= N)
             continue;
 
-        // if next in range, move
+        // if next in range, move on Tmp
         Tmp[nr][nc] += Map[now.r][now.c];
-
-        // check edge
-        int dir = 0;
-        if (nr == 0 || nr == N-1 || nc == 0 || nc == N-1){
-            // 가는 곳이 edge 인 경우 - 방향 반대로 설정
-            if (now.dir == 1)      dir = 2;
-            else if (now.dir == 2) dir = 1;
-            else if (now.dir == 3) dir = 4;
-            else if (now.dir == 4) dir = 3;
-
-            // 미생물 절반
-            cnt /= 2;
-        }
 
         // next Bug Amount check
         if (Map[nr][nc] == 0){ 
             Dir[nr][nc] = Dir[now.r][now.c];
         }
-        
-        cnt += now.cnt;
 
-        BUG next = {nr, nc, cnt, dir};
-        Map[now.r][now.c] = 0;
-        Map[next.r][next.c] = next.cnt;
-        BugQ.push(next);
+        // check edge
+        if (nr == 0 || nr == N-1 || nc == 0 || nc == N-1){
+            // 가는 곳이 edge 인 경우 - 방향 반대로 설정
+            if (now.dir == 1)      Dir[nr][nc] = 2;
+            else if (now.dir == 2) Dir[nr][nc] = 1;
+            else if (now.dir == 3) Dir[nr][nc] = 4;
+            else if (now.dir == 4) Dir[nr][nc] = 3;
+
+            // 미생물 절반
+            Tmp[nr][nc] = Map[now.r][now.c] / 2;
+        }
+        Dir[r][c] = 0;
+        BugQ.push({nr, nc, Map[nr][nc], Dir[nr][nc]});
     }
+    int de = 1;
+    for (int r = 0; r < N; r++)
+        for (int c = 0; c < N; c++){
+            Map[r][c] = Tmp[r][c];
+            Tmp[r][c] = 0;
+        }
+    int de1 = 1;
 }
 
 void reset(){
@@ -89,7 +90,9 @@ int main(){
             BugQ.push(Bug);
         }
 
-        for (int t = 0; t < M; t++){ move(); }
+        for (int t = 0; t < M; t++){ 
+            move(); 
+        }
 
         int s = 0;
         for (int r = 1; r < N - 1; r++)
