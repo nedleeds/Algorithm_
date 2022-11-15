@@ -42,27 +42,27 @@ void move() {
 		if (Tmp[nr][nc] == 0) {
 			dir = Dir[now.r][now.c];
 		}
+
+		// check edge
+		if (nr == 0 || nr == N - 1 || nc == 0 || nc == N - 1) {
+			// 가는 곳이 edge 인 경우 - 방향 반대로 설정
+			if		(Dir[now.r][now.c] == 1) Dir[nr][nc] = 2;
+			else if (Dir[now.r][now.c] == 2) Dir[nr][nc] = 1;
+			else if (Dir[now.r][now.c] == 3) Dir[nr][nc] = 4;
+			else if (Dir[now.r][now.c] == 4) Dir[nr][nc] = 3;
+
+			// 미생물 절반
+			Tmp[nr][nc] = Tmp[nr][nc] / 2;
+		}
+
+		if (Map[nr][nc])
+			BugQ.push({ nr, nc, Map[nr][nc], Dir[nr][nc] });
 	}
 
 	for (int row = 0; row < N; row++)
 		for (int col = 0; col < N; col++) {
 			Map[row][col] = Tmp[row][col];
 			Tmp[row][col] = 0;
-
-			// check edge
-			if (row == 0 || row == N - 1 || col == 0 || col == N - 1) {
-				// 가는 곳이 edge 인 경우 - 방향 반대로 설정
-				if (Dir[row][col] == 1) Dir[row][col] = 2;
-				else if (Dir[row][col] == 2) Dir[row][col] = 1;
-				else if (Dir[row][col] == 3) Dir[row][col] = 4;
-				else if (Dir[row][col] == 4) Dir[row][col] = 3;
-
-				// 미생물 절반
-				Map[row][col] = Map[row][col] / 2;
-			}
-
-			if (Map[row][col])
-				BugQ.push({ row, col, Map[row][col], Dir[row][col] });
 		}
 
 	int de1 = 1;
