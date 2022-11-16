@@ -4,30 +4,33 @@
 #define INF 2134567890
 using namespace std;
 
-int TestCase, N, numOPs;
+int TestCase, N;
 int Min = INF;
 int Max = -INF;
-int OperatorCnt[4];
+int OperatorCnt[4]; // + - * /
+string check;
 vector<int> Numbers;
-int DAT[12];
 
-void dfs(int idx, int totalSum) {
-	if (idx == Numbers.size()) {
-		if (Min > totalSum) { Min = totalSum; }
-		if (Max < totalSum) { Max = totalSum; }
+void dfs(int now, int totalSum) {
+	// level for 'index of Numbers' added to totalSum
+	if (now == Numbers.size() - 1) {
+		Min = min(Min, totalSum);
+		Max = max(Max, totalSum);
 		return;
 	}
 
 	// branch for signs: +, -, /, *
 	for (int i = 0; i < 4; i++) {
-		if (OperatorCnt[i] == 0) continue;
-
+		int next = now + 1;
+		if (OperatorCnt[i] <= 0) { continue; }
+		if (Numbers[next] == 0 && i == 3) { continue; }
+		
 		OperatorCnt[i]--;
 
-		if (i == 0) { dfs(idx + 1, totalSum + Numbers[idx]); }
-		else if (i == 1){ dfs(idx + 1, totalSum - Numbers[idx]); }
-		else if (i == 2) { dfs(idx + 1, totalSum / Numbers[idx]); }
-		else if (i == 3) { dfs(idx + 1, totalSum * Numbers[idx]); }
+		if 		(i == 0) { dfs(next, totalSum + Numbers[next]); }
+		else if (i == 1) { dfs(next, totalSum - Numbers[next]); }
+		else if (i == 2) { dfs(next, totalSum * Numbers[next]); }
+		else if (i == 3) { dfs(next, totalSum / Numbers[next]); }
 		
 		OperatorCnt[i]++;
 	}
@@ -37,18 +40,25 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(), cout.tie(0);
 
-	freopen_s(new FILE*, "./SampleInput/input.txt", "r", stdin);
+	freopen("../SampleInput/input.txt", "r", stdin);
 
 	cin >> TestCase;
 	for (int tc = 1; tc <= TestCase; tc++) {
 		Min = INF;
 		Max = -INF;
 		Numbers.clear();
+		check.clear();
 
 		cin >> N;
 		for (int i = 0; i < 4; i++)
-			OperatorCnt[i]++;
+			OperatorCnt[i] = 0;
 
+		// operator count setting
+		for (int i = 0; i < 4; i++){
+			int cnt;
+			cin >> cnt;
+			OperatorCnt[i] = cnt;
+		}
 
 		// set the input numbers
 		for (int j = 0; j < N; j++) {
