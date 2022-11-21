@@ -1,23 +1,21 @@
 #include <iostream>
 #include <queue>
 #define INF 2134567890
+#define ROW_SIZE 201
+#define COL_SIZE 201
 using namespace std;
 
 int TestCase;
 int Ans = INF;
-int Map[200][200];
-int Vst[200][200];
-int dR[4] = {-1,  0, 1, 0};
+int dR[4] = {-1,  0, 1, 0}; // 상, 좌, 하, 우
 int dC[4] = { 0, -1, 0, 1};
+bool Vst[ROW_SIZE][COL_SIZE];
 struct POS { int r, c; } X1, X2;
 
-void reset(){
-    for (int r = 0; r < 200; r++)
-        for (int c = 0; c < 200; c++){
-            Map[r][c] = 0;
+void resetVst(){
+    for (int r = 0; r < ROW_SIZE; r++)
+        for (int c = 0; c < COL_SIZE; c++)
             Vst[r][c] = 0;
-        }
-    Ans = INF;
 }
 
 void printMap(){
@@ -27,35 +25,27 @@ void printMap(){
         cout << '\n';
 }
 
-void bfs(POS start, int step, int dirIdx){
-    queue<POS> q;
-    q.push(start);
+void dfs(POS now, int step, int direction){
+    cout << "{" << now.r << ", " << now.c << "}\n";
+    if (now.r == X2.r && now.c == X2.c){
+        Ans = min(Ans, step);
+        return ;
+    }
 
-    while(!q.empty()){
-        POS now = q.front();
-        q.pop();
-        Vst[now.r][now.c] = 1;
+    if (now.r == 0 || now.r == ROW_SIZE - 1) return ;
+    if (now.c == 0 || now.c == COL_SIZE - 1) return ;
 
-        if (now.r == X2.r && now.c == X2.c){
-            Ans = min(Ans, step);
-            printMap();
-            return ;
+    for (int i = 0; i < 4; i++){
+        if (i%2 == direction){
+            POS next = {now.r + dR[i], now.c + dC[i]};
+            if (next.r < X1.r - 5 || next.r > X2.r + 5) continue;
+            if (next.c < X1.c - 5 || next.c > X2.c + 5) continue;
+            if (Vst[next.r][next.c]) continue;
+
+            Vst[next.r][next.c] = true;
+            dfs(next, step + 1, (direction ? 0 : 1));
+            Vst[next.r][next.c] = false;
         }
-
-        for (int i = 0; i < 4; i++){
-            if (i%2 == dirIdx){
-                POS next = {now.r + dR[i], now.c + dC[i]};
-                if (next.r < 0 || next.r >= 200) continue;
-                if (next.c < 0 || next.c >= 200) continue;
-                if (Vst[next.r][next.c]) continue;
-
-                Vst[next.r][next.c] = step;
-                
-                q.push(next);
-            }   
-        }
-        dirIdx = dirIdx ? 0 : 1;
-        step++;
     }
 }
 
@@ -68,22 +58,18 @@ int main(){
     cin >> TestCase;
     for (int tc = 1; tc <= TestCase; tc++){
         cin >> X1.r >> X1.c >> X2.r >> X2.c;
+        Ans = INF;
         
         X1.r += 100, X1.c += 100;
         X2.r += 100, X2.c += 100;
 
-        Map[X1.r][X1.c] = 1;
-        Map[X2.r][X2.c] = 2;
-        Vst[X1.r][X1.c] = true;
-
-        // 0: 세로이동
         // 1: 가로이동
-        bfs(X1, 0, 0); 
-        bfs(X1, 0, 1);
+        // 0: 세로이동
+        dfs(X1, 0, 0); 
+        resetVst();
         
+        Ans = Ans == INF ? -1 : Ans;
         cout << "#" << tc << " " << Ans << '\n';
-
-        reset();
     }
 
     return 0;
