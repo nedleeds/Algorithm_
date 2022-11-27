@@ -73,6 +73,7 @@ int main(){
                 NearInfo[area].push_back(nearArea);
             }
         }
+        
 
         dfs(0);
         
