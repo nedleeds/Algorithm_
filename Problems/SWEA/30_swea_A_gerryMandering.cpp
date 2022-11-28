@@ -35,20 +35,24 @@ int main(){
         }
 
         // Binary Counting - 부분 집합 만들기
-        for (int i = 0; i < (1 << N); i++){
+        for (int i = 0; i < (1 << N) / 2 - 1; i++){
             vector<int> A;
             vector<int> B;
             for (int j = 0; j < N; j++){
-                // j번째 비트 확인
-                if (i && (1 << j)){
+                // j번째 비트 확인(총 N 비트 확인)
+                if (i & (1 << j)){
                     A.push_back(j);
                 }
                 else{
                     B.push_back(j);
                 }
             }
+            for (auto a:A){cout << a;}
+            cout << '/';
+            for (auto b:B){cout << b;}
+            cout << '\n';
+            int de = 1 ;
         }
-
 
     }
 
