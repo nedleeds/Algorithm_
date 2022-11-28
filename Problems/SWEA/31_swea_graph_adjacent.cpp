@@ -11,7 +11,7 @@ bool bfs(int nodeStart, int nodeEnd)
 {
     queue<int> q;
     q.push(nodeStart);
-    DAT[nodeNow] = 1;
+    DAT[nodeStart] = 1;
 
     bool adjFlag = false;
     while(!q.empty())
