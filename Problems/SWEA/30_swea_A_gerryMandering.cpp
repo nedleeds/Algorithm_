@@ -47,7 +47,6 @@ int main(){
                     B.push_back(j);
                 }
             }
-            int de = 1;
         }
 
 
