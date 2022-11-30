@@ -75,7 +75,7 @@ int checkLine(CPU p, int direction, int mode) {
 			step++;
 		}
 	}
-	//cout << "Direction[" << direction << "]-step:" << step << '\n';
+
 	return step;
 }
 
@@ -91,7 +91,6 @@ void dfs(int idx, int coreCnt, int lineLen) {
 		return;
 	}
 	else {
-		//cout << "core[" << idx << "]";
 		CPU now = cores[idx];
 
 		// consider 5 cases: draw (4 directions) or Not
