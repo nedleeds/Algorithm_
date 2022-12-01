@@ -1,114 +1,96 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <queue>
+#define INF 213467890
 using namespace std;
 
-int TestCase, N;
-vector<vector<int>> NearInfo;
-vector<int> Population;
+int TestCase, N, Ans;
+vector<int> Population, A, B;
+vector<vector<int>> AdjL;
 
-int bfs(void *pGroup){
-    // 인접 확인
-    // 1. 현재 그룹에 속한 마을인가? (selected)
-    // 2. 방문한 적이 없는 마을인가? (DAT)
+int checkAdj(vector<int> *pGroup){
     vector<int> group = *(vector<int> *)pGroup;
-    bool selected[8] = {0};
-    int DAT[8] = {0};
     int cnt = 0;
-    int s = 0;
+    int numPeople = 0;
+    bool vst[10] = {0};      // 방문한 마을
+    bool selected[10] = {0}; // 현재 그룹 내 마을
 
-    for (auto a: group){
-        selected[a] = true; // 현재 group 의 마을 표시
-        s += Population[a]; // 현재 group 의 유권자 총 합
+    for (auto area: group){ 
+        numPeople += Population[area];
+        selected[area] = true;
     }
 
     queue<int> q;
     q.push(group[0]);
-    DAT[group[0]] = 1;
+    vst[group[0]] = true;
     while(!q.empty()){
         int now = q.front();
-        cnt++;
         q.pop();
+        cnt++;
 
-        for (int i = 0; i < NearInfo[now].size(); i++){
-            int next = NearInfo[now][i];
-            if (DAT[next]) continue; // 방문한 적 없는 곳?
-            if (selected[next] == false) continue; // 현재 그룹 안에 있는 곳?
-            DAT[next] = 1;
+        for (int i = 0; i < AdjL[now].size(); i++){
+            int next = AdjL[now][i];
+            if (vst[next]) continue;
+            if (selected[next] == false) continue;
+
             q.push(next);
+            vst[next] = true;
         }
     }
 
-    // bfs 깊이 == 현재 그룹 수 
-    if (cnt == group.size()){
-        return s;
-    }
-    else{
-        return -1;
-    }
+    if (cnt == group.size()){ return numPeople; }
+    else{ return -1; }
 }
-
 
 int main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(0), cout.tie(0);
+    cin.tie(), cout.tie();
 
     freopen("../SampleInput/input.txt", "r", stdin);
-    
 
-    int ans = 2134567890;
+    cin >> N; // 6
+    Ans = INF;
 
-    cin >> N;
-        
-    // 인구수 입력 받기
-    Population.resize(N);
     for (int i = 0; i < N; i++){
-        int area;
-        cin >> area;
-        Population[i] = area - 1;
+        int cnt;
+        cin >> cnt;
+        Population.push_back(cnt);
     }
 
-    // 인접리스트 만들기 - 마을 index: 0 ~ 7
-    NearInfo.resize(N);
+    AdjL.resize(N);
     for (int r = 0; r < N; r++){
-        int nearCnt;
-        cin >> nearCnt;
-        for (int c = 0; c < nearCnt; c++){
-            int nearArea;
-            cin >> nearArea;
-            NearInfo[r].push_back(nearArea - 1);
+        int numNear;
+        cin >> numNear;
+        for (int i = 0; i < numNear; i++){
+            int area;
+            cin >> area;
+            AdjL[r].push_back(area - 1); }
         }
     }
 
-    // Binary Counting - 부분 집합 만들기 (총 원소 수 : N)
-    // i: 부분 집합의 원소 개수 (1개 ~ N-1 개) -> N/2 - 1
-    for (int i = 1; i < (1 << (N - 1)); i++){
-        vector<int> A;
-        vector<int> B;
-
-        // 마을 그룹 짓기 - A or B
-        for (int j = 0; j < N; j++){
-            if (i & (1 << j)){
-                // if (j번째 bit가 1이면) - 그룹 A로
-                A.push_back(j);
+    for (int i = 1; i < (2 << (N - 1)) / 2; i++){
+        for (int bit = 0; bit < N; bit++){
+            if (i & (1 << bit)){
+                A.push_back(bit);
             }
             else{
-                B.push_back(j);
+                B.push_back(bit);
             }
         }
 
-        // A, B 그룹 둘 다 인접성 확보 시 최저 인구 갱신
-        int numA = bfs(&A);
-        int numB = bfs(&B);
-        if ( numA != -1 && numB != -1){
-            ans = min(ans, abs(numA - numB));
+        int cntA = checkAdj(&A);
+        int cntB = checkAdj(&B);
+
+        if (cntA != -1 && cntB != -1){
+            Ans = min(Ans, abs(cntA - cntB));
         }
-        else{
-            ans = -1;
-        }
+        A.clear();
+        B.clear();
     }
 
-    cout << ans << '\n';
+    Ans = Ans == INF ? -1 : Ans;
+    cout << Ans << '\n';
 
     return 0;
 }
