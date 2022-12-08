@@ -20,12 +20,13 @@ int main(void) {
 	int n, m, t;
 	cin >> n >> m >> t;
 	
+    // 맵 입력
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			cin >> mat[i][j];
 		}
 	}
-
+    // vst 초기화: -1
 	memset(dist, -1, sizeof(dist));
 
 	queue<tuple<int, int, int>> q;
@@ -40,19 +41,22 @@ int main(void) {
 		for (int k = 0; k < 4; k++) {
 			int tx = x + dx[k];
 			int ty = y + dy[k];
-
+            // 범위 체크
 			if (tx < 0 || ty < 0 || tx > n - 1 || ty > m - 1) continue;
-			if (z == 0) {
+			if (z == 0) { // sord 를 지나가기 전
 				if (mat[tx][ty] == 0 && dist[tx][ty][z] == -1) {
+                    // 맵에 길이 있는 곳 && 아직 방문 전
 					dist[tx][ty][z] = dist[x][y][z] + 1;
 					q.push(make_tuple(tx, ty, z));
 				}
 				else if (mat[tx][ty] == 2 && dist[tx][ty][z] == -1) {
-					dist[tx][ty][1] = dist[x][y][z] + 1;
+                    // 검이 있는 곳 && 아직 방문 전
+					dist[tx][ty][1] = dist[x][y][z] + 1; // z=1에 거리 업데이트
 					q.push(make_tuple(tx, ty, 1));
 				}
 			}
-			else {
+			else { 
+                // 검을 가지고 있는 경우 -> 벽이 있는 경우 + 방문 한적 없으면 + 1
 				if ((mat[tx][ty] == 0 || mat[tx][ty] == 1) && dist[tx][ty][z] == -1) {
 					dist[tx][ty][z] = dist[x][y][z] + 1;
 					q.push(make_tuple(tx, ty, z));
