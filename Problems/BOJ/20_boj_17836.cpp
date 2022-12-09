@@ -1,146 +1,107 @@
-#include <tuple>
-#include <queue>
-#include <cstring>
 #include <iostream>
-
+#include <vector>
+#include <queue>
 using namespace std;
 
-int mat[100][100];
-int dist[100][100][2];
+int ROWMAX, COLMAX, T, gotSord;
+int dR[4] = {-1, 1, 0, 0};
+int dC[4] = {0, 0, -1, 1};
+struct POS { int r, c; } Sord, Night, Queen;
+vector<vector<int>> Map, Vst;
 
-int dx[4] = { 1, -1, 0, 0 };
-int dy[4] = { 0, 0, 1, -1 };
+int bfs(int sord){
+    Night = {0, 0};
+    Queen = {ROWMAX - 1, COLMAX - 1};
 
-int main(void) {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0), cout.tie(0);
+    queue<POS> q;
+    q.push(Night);
+    Vst[Night.r][Night.c] = 0;
+
+    while(!q.empty()){
+        POS now = q.front();
+        q.pop();
+
+        if (Map[now.r][now.c] == 2 and sord){
+            gotSord = 1;
+        }
+
+        if (sord == 1 && Map[now.r][now.c] == 2){
+            return Vst[now.r][now.c];
+        }
+
+        for (int i = 0; i < 4; i++){
+            POS next = {now.r + dR[i], now.c + dC[i]};
+            if (next.r < 0 || next.r >= ROWMAX) continue;
+            if (next.c < 0 || next.c >= COLMAX) continue;
+            if (Vst[next.r][next.c] != -1) continue;
+            if (Map[next.r][next.c] == 1) continue;
+
+            Vst[next.r][next.c] = Vst[now.r][now.c] + 1;
+            q.push(next);
+        }
+    }
+
+    return Vst[Queen.r][Queen.c];
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(), cout.tie();
 
     freopen("../SampleInput/input.txt", "r", stdin);
 
-	int n, m, t;
-	cin >> n >> m >> t;
-	
-    // 맵 입력
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			cin >> mat[i][j];
-		}
-	}
-    // vst 초기화: -1
-	memset(dist, -1, sizeof(dist));
+    cin >> ROWMAX >> COLMAX >> T;
+    Map.resize(ROWMAX, vector<int>(COLMAX, 0));
+    Vst.resize(ROWMAX, vector<int>(COLMAX, -1));
+    for (int r = 0; r < ROWMAX; r++){
+        for (int c = 0; c < COLMAX; c++){
+            cin >> Map[r][c];
+            if (Map[r][c] == 2){
+                Sord = {r, c};
+            }
+        }
+    }    
 
-	queue<tuple<int, int, int>> q;
-	q.push(make_tuple(0, 0, 0));
-	dist[0][0][0] = 0;
+    // without sord
+    int dist1 = bfs(0);
+    for (int r = 0; r < ROWMAX; r++){
+        for (int c = 0; c < COLMAX; c++){
+            Vst[r][c] = -1;
+        }
+    }
 
-	while (!q.empty()) {
-		int x, y, z;
-		tie(x, y, z) = q.front();
-		q.pop();
+    // with sord
+    int dist2 = bfs(1);
+    if (gotSord) {
+        dist2 += abs(Queen.r - Sord.r) + abs(Queen.c - Sord.c);
+    }
+    
+    int ans = 0;
+    if (dist1 == - 1 and dist2 == -1){
+        cout << "Fail\n";
+        return 0;
+    }
+    else if (dist1 == -1 and dist2 != -1){
+        ans = dist2;
+    }
+    else if (dist1 != -1 and dist2 == -1){
+        ans = dist1;
+    }
+    else if (dist1 != -1 and dist2 != -1){
+        ans = min(dist1, dist2);
+    }
 
-		for (int k = 0; k < 4; k++) {
-			int tx = x + dx[k];
-			int ty = y + dy[k];
-            // 범위 체크
-			if (tx < 0 || ty < 0 || tx > n - 1 || ty > m - 1) continue;
-			if (z == 0) { // sord 를 지나가기 전
-				if (mat[tx][ty] == 0 && dist[tx][ty][z] == -1) {
-                    // 맵에 길이 있는 곳 && 아직 방문 전
-					dist[tx][ty][z] = dist[x][y][z] + 1;
-					q.push(make_tuple(tx, ty, z));
-				}
-				else if (mat[tx][ty] == 2 && dist[tx][ty][z] == -1) {
-                    // 검이 있는 곳 && 아직 방문 전
-					dist[tx][ty][1] = dist[x][y][z] + 1; // z=1에 거리 업데이트
-					q.push(make_tuple(tx, ty, 1));
-				}
-			}
-			else { 
-                // 검을 가지고 있는 경우 -> 벽이 있는 경우 + 방문 한적 없으면 + 1
-				if ((mat[tx][ty] == 0 || mat[tx][ty] == 1) && dist[tx][ty][z] == -1) {
-					dist[tx][ty][z] = dist[x][y][z] + 1;
-					q.push(make_tuple(tx, ty, z));
-				}
-			}
-		}
-	}
+    if (ans <= T) cout << ans << '\n';
+    else cout << "Fail\n";
 
-	int ans = -1;
-	if (ans == -1 || ans > dist[n - 1][m - 1][0]) {
-		ans = dist[n - 1][m - 1][0];
-	}
-	if (ans == -1 || ans > dist[n - 1][m - 1][1]) {
-		ans = dist[n - 1][m - 1][1];
-	}
-
-	if (ans >= 0 && ans <= t) {
-		cout << ans << '\n';
-	}
-	else {
-		cout << "Fail\n";
-	}
-
-	return 0;
+    Map.clear(), Vst.clear();
+    return 0;
 }
-// #include <iostream>
-// #include <vector>
-// #include <queue>
-// #define INF 2134567890
-// using namespace std;
+/*
+문제점: dist1, dist2 를 구하는 과정에서,
+sord를 주었을 때'만' abs를 더해줬어야했는데 무조건 abs를 더하면서
+칼을 줍지 않더라도 abs를 더해서 minValue를 구하는 과정에서 오류 발생
 
-// int N, M, T;
-// int dR[4] = {-1, 1, 0, 0};
-// int dC[4] = {0, 0, -1, 1};
-// struct POS {int r, c; };
-// vector<vector<int>> Map, Vst;
-
-// void bfs(){
-//     queue<POS> q;
-//     Vst[0][0] = 0;
-//     q.push({0, 0});
-
-//     bool isSord = false;
-//     while(!q.empty()){
-//         POS now = q.front();
-//         q.pop();
-
-//         for (int i = 0; i < 4; i++){
-//             POS next = {now.r + dR[i], now.c + dC[i]};
-//             if (next.r < 0 || next.r >= N) continue;
-//             if (next.c < 0 || next.c >= M) continue;
-//             if (Map[next.r][next.c] == 1 && !isSord) continue;
-//             if (Map[next.r][next.c] == 2) { isSord = true; }
-
-//             if (Vst[next.r][next.c] > Vst[now.r][now.c] + 1){
-//                 Vst[next.r][next.c] = Vst[now.r][now.c] + 1;
-//                 q.push(next);
-//             }
-//         }
-//     }
-// }
-
-// int main(){
-//     ios_base::sync_with_stdio(false);
-//     cin.tie(), cout.tie();
-
-//     freopen("../SampleInput/input.txt", "r", stdin);
-
-//     cin >> N >> M >> T;
-
-//     Map.resize(N, vector<int>(M, 0));
-//     Vst.resize(N, vector<int>(M, INF));
-//     for (int r = 0; r < N; r++){
-//         for (int c = 0; c < M; c++){
-//             cin >> Map[r][c];
-//         }
-//     }
-
-//     bfs();
-//     int ans =  Vst[N - 1][M - 1];
-//     if (0 <= ans && ans <= T) { cout << ans << '\n'; }
-//     else{ cout << "Fail\n"; }
-
-//     Map.clear();
-//     Vst.clear();
-//     return 0;
-// }
+해결: gotSord flag를 놓고 칼을 주웠을 때 true로 선택해서 
+flag가 true 일때 abs 를 더해주는 식으로 구현
+*/
