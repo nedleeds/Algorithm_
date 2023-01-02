@@ -34,5 +34,4 @@ int main(){
 2차 시도 : dfs 에서 test case 에러가 뜸
 3차 시도 : 해설을 보았고, do-while + next_permutation 으로 맞춤
           -> 모든 순열은 sort + do-while + next_permutation 좋음
-4차 풀이 : 
 */
