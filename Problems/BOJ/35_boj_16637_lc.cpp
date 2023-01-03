@@ -34,9 +34,10 @@ int main(){
             // 연속된 연산자 2개를 선택하는 경우 -> 제외
             if ((i & (1 << j)) && (i & (1 << (j + 1)))){ ok = false; }
         }
-        // 연산자 기준으로 계산
         if (!ok){ continue; }
-        vector<Var> temp(variables); 
+
+        // 연산자 기준으로 계산 -> temp 갱신
+        vector<Var> temp(variables);
         for (int j = 0; j < m; j++){
             if ((i & (1 << j))){
                 int k = 2 * j + 1;
@@ -50,7 +51,7 @@ int main(){
                     temp[k - 1].num *= temp[k + 1].num;
                 }
                 temp[k].op = '+';
-                temp[k+1].num = 0;
+                temp[k + 1].num = 0;
             }
         }
         
