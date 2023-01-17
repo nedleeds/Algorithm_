@@ -14,36 +14,43 @@ int main(){
     vector<int> array(N);
     for (int i = 0; i < N; i++){ cin >> array[i]; }
 
-    int ans = 0;
-    int isOk = true;
-    if (array.size() < 1){ ans = -1; }
-    else if (array.size() >= 2) {
-        for (int i = 2; i < N; i++){
-            for (int d1 = -1; d1 <= 1; d1++){
-                for (int d2 = -1; d2 <= 1; d2++){
-                    // 공차를 9가지 경우의 수에 대해 체크
-                    int a_prepre = (array[i - 2] + d1);
-                    int a_pre = (array[i - 1] + d2);
-                    int diff = (array[i - 1] + d2) - (array[i - 2] + d1);
-                    if (array[i] - (array[i - 1] + d2) == diff){
-                        ans += 0;
-                    }
-                    else if ((array[i] - 1) - (array[i - 1] + d2) == diff ){
-                        ans += 1;
-                    }
-                    else if ((array[i] + 1) - (array[i - 1] + d2) == diff ){
-                        ans += 1;
-                    }
+    int ans = 2e9;
+    int isOk = false;
+    if (array.size() == 0){
+        ans = -1;
+    }
+    else if (array.size() <= 2){
+        ans = 0;
+    }
+    else{
+        for (int d1 = -1; d1 <= 1; d1++){
+            for (int d2 = -1; d2 <= 1; d2++){
+
+                int cnt = 0;
+                int a0 = array[0] + d2;
+                int diff = (array[1] + d1) - a0;
+                if (d1 != 0) { cnt ++; }
+                if (d2 != 0) { cnt ++; }
+
+                isOk = true;
+                for (int i = 2; i < N; i++){
+                    int aN = diff * i + a0;
+                    if (array[i] == aN){ cnt+= 0; }
+                    else if (array[i] - 1 == aN) { cnt++; }
+                    else if (array[i] + 1 == aN) { cnt++; }
                     else{
                         isOk = false;
                         break;
                     }
                 }
+                if (isOk && ans > cnt){ ans = cnt; }
             }
         }
     }
-
+    
+    if (ans == 2e9){ ans = -1; }
     cout << ans << '\n';
+
     return 0;
 }
 /*
