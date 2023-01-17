@@ -47,7 +47,7 @@ int main(){
             }
         }
     }
-    
+
     if (ans == 2e9){ ans = -1; }
     cout << ans << '\n';
 
@@ -59,6 +59,7 @@ int main(){
         -> arrSize > 1
         --> next - pre = d
         --> a_n = a_0 + d * (n - 1)
+        ----> n - 1 : index 가 0부터 시작이므로, d * i 로 진행
         경우의수: 3가지 (+1, -1, 0)
 
 */
