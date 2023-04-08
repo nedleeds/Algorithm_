@@ -13,15 +13,15 @@ int dist(int r1, int r2, int c1, int c2){
     return abs(r1 - r2) + abs(c1 - c2);
 }
 
-void dfs(int lvl){
-    if (lvl == )
+// void dfs(int lvl){
+//     if (lvl == )
 
-    for (int i = 0; i < M; i++){
-        if (Vst[i]){ continue; }
-        DAT[i] = 1;
-        dfs(lvl + 1);
-    }
-}
+//     for (int i = 0; i < M; i++){
+//         if (Vst[i]){ continue; }
+//         DAT[i] = 1;
+//         dfs(lvl + 1);
+//     }
+// }
 
 int main(){
     ios_base::sync_with_stdio(false);
@@ -43,7 +43,7 @@ int main(){
     for (int i = 1; i <= Chicks.size(); i++){
         Vst.clear();
         Vst.resize(i);
-        dfs(0);
+        // dfs(0);
     }
     
 
