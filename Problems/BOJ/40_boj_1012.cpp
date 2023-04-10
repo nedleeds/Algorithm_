@@ -11,11 +11,16 @@ int dR[4] = {-1, 1, 0, 0};
 int dC[4] = { 0, 0,-1, 1};
 
 void bfs(){
-    int group = 1;
+    int group = 0;
 
     while(!Bugs.empty()){
         POS now = Bugs.front();
         Bugs.pop();
+        
+        if (Vst[now.row][now.col] == 0){
+            group++;
+            Vst[now.row][now.col] = group;
+        }
 
         for (int i = 0; i < 4; i++){
             POS nxt = { now.row + dR[i], 
@@ -26,8 +31,6 @@ void bfs(){
 
             Vst[nxt.row][nxt.col] = group;
         }
-
-        group++;
     }
 
     cout << group << '\n';
