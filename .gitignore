@@ -10,3 +10,4 @@ VisualStudio
 .vscode
 *.o
 a_test_review
+!*/*.exe
