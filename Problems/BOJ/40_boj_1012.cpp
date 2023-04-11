@@ -3,37 +3,24 @@
 #include <queue>
 using namespace std;
 
-int M, N, K;
-struct POS{  int row, col; };
+int Col, Row, K;
+struct POS{  int r, c; };
 vector<vector<int>> Map, Vst;
 queue<POS> Bugs;
 int dR[4] = {-1, 1, 0, 0};
 int dC[4] = { 0, 0,-1, 1};
 
-void bfs(){
-    int group = 0;
+void dfs(POS now){
+    for (int i = 0; i < 4; i++){
+        POS next = {now.r + dR[i], now.c + dC[i]};
+        if (0 <= next.r && next.r < Row && 0 <= next.c && next.c < Col){
+            if (Vst[next.r][next.c]) continue;
+            if (!Map[next.r][next.c]) continue;
+            Vst[next.r][next.c] = 1;
 
-    while(!Bugs.empty()){
-        POS now = Bugs.front();
-        Bugs.pop();
-        
-        if (Vst[now.row][now.col] == 0){
-            group++;
-            Vst[now.row][now.col] = group;
-        }
-
-        for (int i = 0; i < 4; i++){
-            POS nxt = { now.row + dR[i], 
-                        now.col + dC[i] };
-            if (nxt.row < 0 || nxt.row >= N) continue;
-            if (nxt.col < 0 || nxt.col >= M) continue;
-            if (Vst[nxt.row][nxt.col]) continue;
-
-            Vst[nxt.row][nxt.col] = group;
+            dfs({next});
         }
     }
-
-    cout << group << '\n';
 }
 
 int main(){
@@ -47,18 +34,27 @@ int main(){
 
     for (int tc = 0; tc < testCase; tc++){
         // M: col, N: row, K: num of cabage
-        cin >> M >> N >> K; 
-        Map.resize(N, vector<int>(M));
-        Vst.resize(N, vector<int>(M));
+        cin >> Col >> Row >> K; 
+        Map.resize(Row, vector<int>(Col));
+        Vst.resize(Row, vector<int>(Col));
         
         for (int i = 0; i < K; i++){
             int row, col;
             cin >> col >> row;
             Map[row][col] = 1;
-            Bugs.push({row, col});
         }
 
-        bfs();
+        int group = 0;
+        for (int r = 0; r < Row; r++){
+            for (int c = 0; c < Col; c++){
+                if (Map[r][c] && !Vst[r][c]){
+                    ++group;
+                    dfs({r, c});
+                }
+            }
+        }
+
+        cout << group << '\n';
 
         Map.clear();
         Vst.clear();
