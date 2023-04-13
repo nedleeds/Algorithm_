@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int N, M, V;
@@ -10,6 +11,15 @@ vector<vector<int>> Map;
 vector<int> Nodes, Path;
 
 bool cmp(int a, int b){ return a < b; }
+struct cmp2{ bool operator()(int a, int b){ return a > b;} };
+priority_queue<int, vector<int>, cmp2> PQ;
+
+void printPath(){
+    for (auto x: Path){
+        cout << x << " ";
+    }
+    cout << "\n";
+}
 
 void dfs(int lvl, int from, int start){
     if (from == start && lvl != 0){
@@ -24,6 +34,18 @@ void dfs(int lvl, int from, int start){
         Vst[to] = 1;
         dfs(lvl + 1, to, start);
     }
+}
+
+void bfs(int lvl){
+    for (int i = 0; i < Nodes.size(); i++){
+        int to = Nodes[i];
+        if (Vst[to]) continue;
+        if (Map[from][to]){
+            Path.push_back(to);
+        }
+        Vst[to] = 1;
+    }
+    bfs(lvl + 1);
 }
 
 int main(){
@@ -59,14 +81,18 @@ int main(){
     Vst[V] = 1;
     Path.push_back(V);
     dfs(0, V, V);
-    for (auto x: Path){
-        cout << x << " ";
-    }
-    cout << "\n";
+    printPath();
+
+    // init before do bfs
     Path.clear();
+    for (int i = 0; i < 1001; i++){
+        Vst[i] = 0;
+    }
 
-    
-
+    Vst[V] = 1;
+    Path.push_back(V);
+    bfs(V);
+    printPath();
 
     Map.clear();
 
