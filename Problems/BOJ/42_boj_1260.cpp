@@ -36,16 +36,24 @@ void dfs(int lvl, int from, int start){
     }
 }
 
-void bfs(int lvl){
-    for (int i = 0; i < Nodes.size(); i++){
-        int to = Nodes[i];
-        if (Vst[to]) continue;
-        if (Map[from][to]){
-            Path.push_back(to);
+void bfs(){
+    queue<int> q;
+    q.push(V);
+    Vst[V] = 1;
+
+    while(!q.empty()){
+        int from = q.front();
+        q.pop();
+
+        Path.push_back(from);
+
+        for (int to = 1; to <= N; to++){
+            if (Map[from][to] == 0) continue;
+            if (Vst[to]) continue;
+            Vst[to] = 1;
+            q.push(to);
         }
-        Vst[to] = 1;
     }
-    bfs(lvl + 1);
 }
 
 int main(){
@@ -69,10 +77,12 @@ int main(){
         if (DAT[from] == 0) {
             DAT[from] = 1;
             Nodes.push_back(from);
+            PQ.push(from);
         }
         if (DAT[to] == 0){
             DAT[to] = 1;
             Nodes.push_back(to);
+            PQ.push(to);
         }
     }
 
@@ -89,9 +99,7 @@ int main(){
         Vst[i] = 0;
     }
 
-    Vst[V] = 1;
-    Path.push_back(V);
-    bfs(V);
+    bfs();
     printPath();
 
     Map.clear();
