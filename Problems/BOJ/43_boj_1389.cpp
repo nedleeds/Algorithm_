@@ -21,6 +21,7 @@ void bfs(int start){
         for (int i = 0; i < AdjList[user].size(); i++){
             int pal = AdjList[user][i];
             Dist[user][pal] = min(Dist[user][i], Dist[user][pal]);
+            
         }
 
     }
