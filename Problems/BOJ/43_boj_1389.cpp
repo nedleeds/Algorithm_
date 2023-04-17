@@ -14,14 +14,18 @@ void bfs(int start){
     queue<int> q;
     q.push(start);
 
+    Dist.assign(N + 1, vector<int>(N + 1, INF));
+    Vst[start] = 1;
+
     while(!q.empty()){
         int user = q.front();
         q.pop();
 
         for (int i = 0; i < AdjList[user].size(); i++){
             int pal = AdjList[user][i];
-            Dist[user][pal] = min(Dist[user][i], Dist[user][pal]);
-            
+            if (Vst[pal]) continue;
+            Dist[user][pal] = 1;
+            q.push(pal);
         }
 
     }
@@ -49,7 +53,14 @@ int main(){
     for (int user = 0; user < AdjList.size(); user++)
     {   
         if (AdjList[user].size() != 0)
-        {   // [user -> pal]'s min dist
+        {   
+            // [user -> pal]'s min dist
+            // pal check
+            cout << "[" << user << "]";
+            for (auto x : AdjList[user]){
+                cout << x << ' ';
+            }
+            cout << '\n';
             bfs(user);
         }
     }
