@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <algorithm>
 using namespace std;
 
 int main(){
@@ -11,29 +11,30 @@ int main(){
     int a, b;
     cin >> a >> b;
 
-    int midA = (int) sqrt(a);
-    int midB = (int) sqrt(b);
-
-    int minVal = 0;
     int maxVal = 0;
+    int minNum = min(a, b);
+    int maxNum = max(a, b);
 
-    for (int x = a - 1 ; x > 1; x--){
-        if (a % x == 0){
-            for (int y = b - 1; y > 1; y--){
-                if (b % y == 0 && x == y){
-                    maxVal = y;
+    for (int i = maxNum; i > 0; i--){
+        if (maxNum % i == 0){
+            for (int j = minNum; j > 0; j--){
+                if (minNum % j == 0 && i == j){
+                    maxVal = i;
                     break;
                 }
             }
-            if (maxVal != 0) {
-                break;
-            }
         }
+        if (maxVal != 0) break;
     }
-    cout << maxVal << ' ';
 
-    for (int i = a; i < )
-    cout << minVal << '\n';
+    if (maxVal != 0){
+        cout << maxVal << '\n';
+        cout << a * b / maxVal << '\n';
+    }
+    else {
+        cout << 1 << '\n';
+        cout << a * b << '\n';
+    }
 
     return 0;
 }
